@@ -1,0 +1,24 @@
+{
+    "name": "jcstrandburg/php-collections",
+    "description": "PHP collection classes",
+    "type": "library",
+    "autoload": {
+        "files": [
+            "src/demeter.php"
+        ],
+        "psr-4": {
+            "Jcstrandburg\\Demeter\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Justin Strandburg",
+            "email": "justin.strandburg@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.3"
+    }
+}
