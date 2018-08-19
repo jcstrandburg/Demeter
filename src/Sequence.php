@@ -65,7 +65,7 @@ class Sequence extends \IteratorIterator
      * @param   mixed $ele
      * @return  Sequence
      */
-    public function concat(iterable $elements)
+    public function concat(iterable $elements): Sequence
     {
         $appendIterator = new \AppendIterator();
         $appendIterator->append($this);
@@ -78,15 +78,24 @@ class Sequence extends \IteratorIterator
      * @param   mixed $ele
      * @return  Sequence
      */
-    public function skip(int $offset)
+    public function skip(int $offset): Sequence
     {
         if ($offset < 0) {
             throw new \IllegalArgumentException("\$count must be non-negative");
         } else if ($offset == 0) {
             return $this;
         } else {
-            return $this->limit($offset, -1);
+            return $this->slice($offset, -1);
         }
+    }
+
+    /**
+     * Creates a new Sequence without all contigous elements at the beginning of the Sequence that don't pass $accept
+     * @param   calllable   $accept Callback that returns a truthy value if the current element should be skipped
+     */
+    public function skipWhile(callable $accept): Sequence
+    {
+        return new Sequence(new SkipWhileIterator($this, $accept));
     }
 
     /**
@@ -94,15 +103,24 @@ class Sequence extends \IteratorIterator
      * @param   int $count
      * @return  Sequence
      */
-    public function take(int $count)
+    public function take(int $count): Sequence
     {
         if ($count < 0) {
             throw new \IllegalArgumentException("\$count must be non-negative");
         } else if ($count == 0) {
             return self::empty();
         } else {
-            return $this->limit(0, $count);
+            return $this->slice(0, $count);
         }
+    }
+
+    /**
+     * Creates a new Sequence with all elements that pass $accept and are contigous at the beginning of the Sequence
+     * @param   calllable   $accept Callback that returns a truthy value if the current element should be taken
+     */
+    public function takeWhile(callable $accept): Sequence
+    {
+        return new Sequence(new TakeWhileIterator($this, $accept));
     }
 
     /**
@@ -111,7 +129,7 @@ class Sequence extends \IteratorIterator
      * @param   int $count  The maximum number of elements in the resulting Sequence
      * @return  Sequence
      */
-    public function limit(int $offset, int $count)
+    public function slice(int $offset, int $count): Sequence
     {
         return new Sequence(new \LimitIterator($this, $offset, $count));
     }
@@ -120,7 +138,7 @@ class Sequence extends \IteratorIterator
      * Materializes this Sequence to an array with numeric keys.
      * @return  array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return iterator_to_array($this, false);
     }

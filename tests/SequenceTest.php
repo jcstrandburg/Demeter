@@ -84,16 +84,46 @@ class SequenceTest extends TestCase
         $this->assertEquals(self::SOURCE, sequence(self::SOURCE)->skip(0)->toArray());
     }
 
+    public function testSkipWhile()
+    {
+        $this->assertEquals(
+            [3, 2, 2, 2],
+            sequence([1, 1, 1, 3, 2, 2, 2])->skipWhile(function ($x) {return $x < 3;})->toArray());
+
+        $this->assertEquals(
+            [],
+            sequence([2, 3, 4])->skipWhile(function ($x) {return $x < 5;})->toArray());
+
+        $this->assertEquals(
+            [2, 3, 4],
+            sequence([2, 3, 4])->skipWhile(function ($x) {return $x < 2;})->toArray());
+    }
+
     public function testTake()
     {
         $this->assertEquals([1, 2, 3], sequence(self::SOURCE)->take(3)->toArray());
         $this->assertEquals([], sequence(self::SOURCE)->take(0)->toArray());
     }
 
-    public function testLimit()
+    public function testTakeWhile()
     {
-        $this->assertEquals([7, 8, 9], sequence(self::SOURCE)->limit(6, 3)->toArray());
-        $this->assertEquals(self::SOURCE, sequence(self::SOURCE)->limit(0, 10)->toArray());
+        $this->assertEquals(
+            [1, 1, 1],
+            sequence([1, 1, 1, 2, 1, 1, 1])->takeWhile(function ($x) {return $x < 2;})->toArray());
+
+        $this->assertEquals(
+            [],
+            sequence([2, 3, 4])->takeWhile(function ($x) {return $x < 2;})->toArray());
+
+        $this->assertEquals(
+            [2, 3, 4],
+            sequence([2, 3, 4])->takeWhile(function ($x) {return $x < 5;})->toArray());
+    }
+
+    public function testSlice()
+    {
+        $this->assertEquals([7, 8, 9], sequence(self::SOURCE)->slice(6, 3)->toArray());
+        $this->assertEquals(self::SOURCE, sequence(self::SOURCE)->slice(0, 10)->toArray());
     }
 
     public function testEmpty()
