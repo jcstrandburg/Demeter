@@ -36,6 +36,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Changed
+* `sequence` and `collect` now will return their argument unmodified it is already of the correct type
+
 ### 0.2
 
 #### Added

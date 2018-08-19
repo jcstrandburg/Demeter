@@ -3,12 +3,12 @@ namespace Jcstrandburg\Demeter;
 
 function sequence(iterable $seq)
 {
-    return new Sequence($seq);
+    return $seq instanceof Sequence ? $seq : new Sequence($seq);
 }
 
 function collect(iterable $seq)
 {
-    return new Collection($seq);
+    return $seq instanceof Collection ? $seq : new Collection($seq);
 }
 
 function xrange(int $start, int $end, int $step = 1)
