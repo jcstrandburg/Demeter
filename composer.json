@@ -1,6 +1,6 @@
 {
-    "name": "jcstrandburg/php-collections",
-    "description": "PHP collection classes",
+    "name": "jcstrandburg/demeter",
+    "description": "Colllection library",
     "type": "library",
     "autoload": {
         "files": [
