@@ -149,6 +149,38 @@ class Sequence extends \IteratorIterator
     }
 
     /**
+     * Returns true if the given predicate returns a truthy value for any elements, else false.
+     * The sequence will not be evaluated beyond the first elements that passes the predicate.
+     * @param   calllable   $predicate
+     */
+    public function any(callable $predicate): bool
+    {
+        foreach ($this as $ele) {
+            if (($predicate)($ele)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the given predicate returns a truthy value for all elements, else false.
+     * The sequence will not be evaluated beyond the first elements that does not pass the predicate.
+     * @param   calllable   $predicate
+     */
+    public function all(callable $predicate): bool
+    {
+        foreach ($this as $ele) {
+            if (!($predicate)($ele)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Materializes this Sequence to an array with numeric keys. Keys from the original iterator are not preserved.
      * @return  array
      */

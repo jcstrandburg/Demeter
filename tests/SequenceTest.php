@@ -138,6 +138,44 @@ class SequenceTest extends TestCase
         $this->assertEquals(10, sequence([1, 2, 3, 4])->fold(0, $add));
     }
 
+    public function testAll()
+    {
+        $odds = sequence([1, 3, 5, 7]);
+        $evens = sequence([2, 4, 6, 8]);
+        $mixed = sequence([1, 2, 3, 4]);
+
+        $is_odd = function ($x) {return $x % 2 == 1;};
+        $is_even = function ($x) {return $x % 2 == 0;};
+
+        $this->assertTrue($odds->all($is_odd));
+        $this->assertFalse($odds->all($is_even));
+
+        $this->assertFalse($evens->all($is_odd));
+        $this->assertTrue($evens->all($is_even));
+
+        $this->assertFalse($mixed->all($is_odd));
+        $this->assertFalse($mixed->all($is_even));
+    }
+
+    public function testAny()
+    {
+        $odds = sequence([1, 3, 5, 7]);
+        $evens = sequence([2, 4, 6, 8]);
+        $mixed = sequence([1, 2, 3, 4]);
+
+        $is_odd = function ($x) {return $x % 2 == 1;};
+        $is_even = function ($x) {return $x % 2 == 0;};
+
+        $this->assertTrue($odds->any($is_odd));
+        $this->assertFalse($odds->any($is_even));
+
+        $this->assertFalse($evens->any($is_odd));
+        $this->assertTrue($evens->any($is_even));
+
+        $this->assertTrue($mixed->any($is_odd));
+        $this->assertTrue($mixed->any($is_even));
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());
