@@ -135,7 +135,21 @@ class Sequence extends \IteratorIterator
     }
 
     /**
-     * Materializes this Sequence to an array with numeric keys.
+     * Accumulates and returns a value from each element in the sequence.
+     * @param   mixed   $initial    The seed value fed into the accumulator. Must be of the form ($currentValue, $currentElement) -> $nextValue
+     * @return  mixed
+     */
+    public function fold($initial, callable $folder)
+    {
+        $currentValue = $initial;
+        foreach ($this as $ele) {
+            $currentValue = ($folder)($currentValue, $ele);
+        }
+        return $currentValue;
+    }
+
+    /**
+     * Materializes this Sequence to an array with numeric keys. Keys from the original iterator are not preserved.
      * @return  array
      */
     public function toArray(): array

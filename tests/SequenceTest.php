@@ -126,6 +126,18 @@ class SequenceTest extends TestCase
         $this->assertEquals(self::SOURCE, sequence(self::SOURCE)->slice(0, 10)->toArray());
     }
 
+    public function testFold()
+    {
+        $add = function ($a, $b) {return $a + $b;};
+        $mul = function ($a, $b) {return $a * $b;};
+
+        $this->assertEquals(0, sequence([])->fold(0, $mul));
+        $this->assertEquals(1, sequence([])->fold(1, $mul));
+        $this->assertEquals(24, sequence([2, 3, 4])->fold(1, $mul));
+
+        $this->assertEquals(10, sequence([1, 2, 3, 4])->fold(0, $add));
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());
