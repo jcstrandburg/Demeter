@@ -180,6 +180,11 @@ class Sequence extends \IteratorIterator
         return true;
     }
 
+    /**
+     * Groups the elements of the sequence by the value returned by the given key selector.
+     * @param   callable    $getGroupKey
+     * @return  GroupedCollection
+     */
     public function groupBy(callable $getGroupKey): GroupedCollection
     {
         $data = [];
