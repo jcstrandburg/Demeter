@@ -36,6 +36,13 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Added
+* `Sequence::first`
+* `Sequence::firstOrNull`
+* `Sequence::last`
+* `Sequence::lastOrNull`
+* `Sequence::single`
+* `Sequence::singleOrNull`
 #### Changed
 * `sequence` and `collect` now will return their argument unmodified it is already of the correct type
 

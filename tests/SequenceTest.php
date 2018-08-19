@@ -176,6 +176,62 @@ class SequenceTest extends TestCase
         $this->assertTrue($mixed->any($is_even));
     }
 
+    public function testFirst()
+    {
+        $source = sequence([1, 10, 11, 12]);
+
+        $this->assertEquals(1, $source->first());
+        $this->assertEquals(11, $source->first(function ($x) {return $x > 10;}));
+
+        $this->expectException(\LogicException::class);
+        $source->first(function ($x) {return $x > 12;});
+    }
+
+    public function testFirstOrNull()
+    {
+        $source = sequence([1, 10, 11, 12]);
+
+        $this->assertEquals(1, $source->firstOrNull());
+        $this->assertEquals(11, $source->firstOrNull(function ($x) {return $x > 10;}));
+        $this->assertEquals(null, $source->firstOrNull(function ($x) {return $x > 12;}));
+    }
+
+    public function testLast()
+    {
+        $source = sequence([1, 10, 11, 12]);
+
+        $this->assertEquals(12, $source->last());
+        $this->assertEquals(10, $source->last(function ($x) {return $x < 11;}));
+
+        $this->expectException(\LogicException::class);
+        $source->last(function ($x) {return $x > 12;});
+    }
+
+    public function testLastOrNull()
+    {
+        $source = sequence([1, 10, 11, 12]);
+
+        $this->assertEquals(12, $source->last());
+        $this->assertEquals(10, $source->last(function ($x) {return $x < 11;}));
+
+        $this->expectException(\LogicException::class);
+        $this->assertEquals(null, $source->last(function ($x) {return $x > 12;}));
+    }
+
+    public function testSingle()
+    {
+        $this->assertEquals(1, sequence([1])->single());
+        $this->assertEquals(1, sequence([1])->singleOrNull());
+
+        $this->assertEquals(2, sequence([1, 2, 3])->single(function ($x) {return $x % 2 == 0;}));
+        $this->assertEquals(2, sequence([1, 2, 3])->singleOrNull(function ($x) {return $x % 2 == 0;}));
+
+        $this->assertEquals(null, sequence([1, 2, 3])->singleOrNull(function ($x) {return $x > 3;}));
+
+        $this->expectException(\LogicException::class);
+        sequence([1, 2, 3])->single(function ($x) {return $x > 3;});
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());

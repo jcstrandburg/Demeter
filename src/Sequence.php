@@ -203,6 +203,119 @@ class Sequence extends \IteratorIterator
     }
 
     /**
+     * Returns the first element that passes the given predicate, or just the first element if no predicate is provided.
+     * Throws an exception if no matching element is found.
+     * @param   callable    $predicate
+     * @return  mixed
+     */
+    public function first(callable $predicate = null)
+    {
+        list($success, $value) = $this->firstCore($predicate);
+        if ($success) {
+            return $value;
+        }
+
+        throw new \LogicException("No matching element found.");
+    }
+
+    /**
+     * Returns the first element that passes the given predicate, or just the first element if no predicate is provided.
+     * Returns null if no element is found.
+     * @param   callable    $predicate
+     * @return  mixed
+     */
+    public function firstOrNull(callable $predicate = null)
+    {
+        list($success, $value) = $this->firstCore($predicate);
+        if ($success) {
+            return $value;
+        }
+
+        return null;
+    }
+
+    private function firstCore(?callable $predicate)
+    {
+        foreach ($this as $ele) {
+            if ($predicate === null || ($predicate)($ele)) {
+                return [true, $ele];
+            }
+        }
+        return [false, null];
+    }
+
+    /**
+     * Returns the last element that passes the given predicate, or just the last element if no predicate is provided.
+     * Throws an exception if no matching element is found.
+     * @param   callable    $predicate
+     * @return  mixed
+     */
+    public function last(callable $predicate = null)
+    {
+        $values = $this->lastCore($predicate);
+
+        if (count($values) > 0) {
+            return end($values);
+        }
+
+        throw new \LogicException("No matching element found.");
+    }
+
+    /**
+     * Returns the last element that passes the given predicate, or just the last element if no predicate is provided.
+     * Returns null if no element is found.
+     * @param   callable    $predicate
+     * @return  mixed
+     */
+    public function lastOrNull(callable $predicate = null)
+    {
+        $values = $this->lastCore($predicate);
+
+        if (count($values) > 0) {
+            return end($values);
+        }
+
+        return null;
+    }
+
+    private function lastCore(?callable $predicate)
+    {
+        return $predicate === null ? $this->toArray() : $this->filter($predicate)->toArray();
+    }
+
+    public function single(callable $predicate = null)
+    {
+        list($success, $value) = $this->firstCore($predicate);
+        if ($success) {
+            return $value;
+        }
+
+        throw new \LogicException("No matching element found");
+    }
+
+    public function singleOrNull(callable $predicate = null)
+    {
+        list($success, $value) = $this->firstCore($predicate);
+        if ($success) {
+            return $value;
+        }
+
+        return null;
+    }
+
+    private function singleCore(?callable $predicate)
+    {
+        $elements = ($predicate === null ? $this->take(2) : $this->filter($predicate)->take(2))->toArray();
+        if (count($elements) > 1) {
+            throw new \LogicException();
+        } else if (count($elements) == 1) {
+            return [true, reset($elements)];
+        } else {
+            return [false, null];
+        }
+    }
+
+    /**
      * Materializes this Sequence to an array with numeric keys. Keys from the original iterator are not preserved.
      * @return  array
      */
