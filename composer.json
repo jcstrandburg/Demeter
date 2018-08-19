@@ -2,6 +2,7 @@
     "name": "jcstrandburg/demeter",
     "description": "Colllection library",
     "type": "library",
+    "version":"v0.1",
     "autoload": {
         "files": [
             "src/demeter.php"

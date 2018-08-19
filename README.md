@@ -36,12 +36,16 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.1
+
 #### Added
 * Sequence
 * Collection
 * Various utility functions
 * LazyRewindableIterator
 * MappedIterator
+* SkipWhileIterator
+* TakeWhileIterator
 
 ## License
 
