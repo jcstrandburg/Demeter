@@ -17,4 +17,14 @@ class Collection extends Sequence implements \Countable
     {
         return $this->count;
     }
+
+    private static $_empty;
+
+    function empty() {
+        if (self::$_empty == null) {
+            self::$_empty = new Collection([]);
+        }
+
+        return self::$_empty;
+    }
 }

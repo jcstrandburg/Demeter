@@ -180,6 +180,23 @@ class Sequence extends \IteratorIterator
         return true;
     }
 
+    public function groupBy(callable $getGroupKey): GroupedCollection
+    {
+        $data = [];
+
+        foreach ($this as $ele) {
+            $key = ($getGroupKey)($ele);
+
+            if (!array_key_exists($key, $data)) {
+                $data[$key] = [];
+            }
+
+            $data[$key][] = $ele;
+        }
+
+        return new GroupedCollection($data);
+    }
+
     /**
      * Materializes this Sequence to an array with numeric keys. Keys from the original iterator are not preserved.
      * @return  array
