@@ -37,6 +37,8 @@ $x = sequence([1, 2, 3, 4, 5])
 ### Unreleased
 
 #### Added
+* `HashSet`
+* `Sequence::asSet`
 * `Sequence::first`
 * `Sequence::firstOrNull`
 * `Sequence::last`

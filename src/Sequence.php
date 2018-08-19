@@ -324,6 +324,16 @@ class Sequence extends \IteratorIterator
         return iterator_to_array($this, false);
     }
 
+    /**
+     * Converts the sequence to a HashSet, using the given hash function (or the default if none is provided)
+     * @param   callable|nulll  $hashFunction
+     * @return  HashSet
+     */
+    public function asSet(?callable $hashFunction = null): HashSet
+    {
+        return HashSet::from($this, $hashFunction);
+    }
+
     public function __toString()
     {
         return "<Sequence>";
