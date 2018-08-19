@@ -36,6 +36,13 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.2
+
+#### Added
+* Sequence::groupBy
+* GroupedCollection
+* Grouping
+
 ### 0.1
 
 #### Added
