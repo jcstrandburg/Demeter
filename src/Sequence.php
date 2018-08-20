@@ -316,7 +316,7 @@ class Sequence extends \IteratorIterator
     }
 
     /**
-     * Materializes this Sequence to an array with numeric keys. Keys from the original iterator are not preserved.
+     * Materializes this Sequence to an array with numeric keys. Keys from the original iterator may not be preserved, depending on the implementation.
      * @return  array
      */
     public function toArray(): array
@@ -332,6 +332,24 @@ class Sequence extends \IteratorIterator
     public function asSet(?callable $hashFunction = null): HashSet
     {
         return HashSet::from($this, $hashFunction);
+    }
+
+    /**
+     * Converts the sequence to a Dictionary
+     * @param   callable    $keySelector
+     * @param   callable|null   $valueSelector Optional
+     * @return  Dictionary
+     */
+    public function toDictionary(callable $keySelector, ?callable $valueSelector = null): Dictionary
+    {
+        $getValue = $valueSelector ?? function ($x) {return $x;};
+
+        $keyValuePairs = [];
+        foreach ($this as $item) {
+            $keyValuePairs[] = [($keySelector)($item), ($getValue)($item)];
+        }
+
+        return Dictionary::from($keyValuePairs);
     }
 
     public function __toString()

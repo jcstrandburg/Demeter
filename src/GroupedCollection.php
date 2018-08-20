@@ -44,12 +44,12 @@ class GroupedCollection extends Collection implements \ArrayAccess
 
     public function offsetSet($key, $value)
     {
-        throw new BadMethodCallException("GroupedCollection does not support offsetSet");
+        throw new \BadMethodCallException("GroupedCollection does not support offsetSet");
     }
 
     public function offsetUnset($key)
     {
-        throw new BadMethodCallException("GroupedCollection does not support offsetUnset");
+        throw new \BadMethodCallException("GroupedCollection does not support offsetUnset");
     }
 
     private static $emptyGroupsCache = [];
