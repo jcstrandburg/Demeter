@@ -57,20 +57,20 @@ $x = sequence([1, 2, 3, 4, 5])
 ### 0.2
 
 #### Added
-* Sequence::groupBy
-* GroupedCollection
-* Grouping
+* `Sequence::groupBy`
+* `GroupedCollection`
+* `Grouping`
 
 ### 0.1
 
 #### Added
-* Sequence
-* Collection
+* `Sequence`
+* `Collection`
 * Various utility functions
-* LazyRewindableIterator
-* MappedIterator
-* SkipWhileIterator
-* TakeWhileIterator
+* `LazyRewindableIterator`
+* `MappedIterator`
+* `SkipWhileIterator`
+* `TakeWhileIterator`
 
 ## License
 

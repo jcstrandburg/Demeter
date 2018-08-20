@@ -283,6 +283,12 @@ class Sequence extends \IteratorIterator
         return $predicate === null ? $this->toArray() : $this->filter($predicate)->toArray();
     }
 
+    /**
+     * Returns the single element that passes the given predicate, or the single element in the sequence if no predicate is provided
+     * @param   callable|null   $predicate
+     * @throws  \LogicException If the number of matching elements found is not 1
+     * @return  mixed
+     */
     public function single(callable $predicate = null)
     {
         list($success, $value) = $this->firstCore($predicate);
@@ -293,6 +299,12 @@ class Sequence extends \IteratorIterator
         throw new \LogicException("No matching element found");
     }
 
+    /**
+     * Returns the single element that passes the given predicate (or the single element in the sequence if no predicate is provided). Returns null if no matching element is found.
+     * @param   callable|null   $predicate
+     * @throws  \LogicException If the number of matching elements found is greater than 1
+     * @return  mixed
+     */
     public function singleOrNull(callable $predicate = null)
     {
         list($success, $value) = $this->firstCore($predicate);
