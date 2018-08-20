@@ -1,6 +1,7 @@
 <?php
 namespace Tests;
 
+use Jcstrandburg\Demeter\Lambda;
 use Jcstrandburg\Demeter\MappedIterator;
 use PHPUnit\Framework\TestCase;
 
@@ -10,13 +11,12 @@ class MappedIteratorTest extends TestCase
 
     public function testIdentityMap(): void
     {
-        $this->doTest(self::SOURCE, function ($x) {return $x;});
+        $this->doTest(self::SOURCE, Lambda::identity());
     }
 
     public function testMapWithPlusOne(): void
     {
-        $plusOne = function ($x) {return $x + 1;};
-        $this->doTest(array_map($plusOne, self::SOURCE), $plusOne);
+        $this->doTest(array_map(Lambda::plus(1), self::SOURCE), Lambda::plus(1));
     }
 
     private function doTest(array $expected, callable $mapper): void

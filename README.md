@@ -25,10 +25,11 @@ With Demeter:
 
 ```php
 use function Jcstrandburg\Demeter\sequence;
+use Jcstrandburg\Demeter\Lambda;
 
 $x = sequence([1, 2, 3, 4, 5])
-    ->filter(function($x) {return $x % 2 == 1;})
-    ->map(function($x) {return $x * 2;})
+    ->filter(Lambda::isOdd())
+    ->map(Lambda::multiplyBy(2))
     ->take(2);
 ```
 
@@ -37,6 +38,7 @@ $x = sequence([1, 2, 3, 4, 5])
 ### Unreleased
 
 #### Added
+* Add `Lambda` utility class
 * Add `dictionary` and `set` factory functions
 
 ### 0.4

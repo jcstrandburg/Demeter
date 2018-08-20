@@ -27,7 +27,7 @@ class Sequence extends \IteratorIterator
      */
     public function flatMap(callable $selector = null)
     {
-        $selector = $selector ?: function ($x) {return $x;};
+        $selector = $selector ?: Lambda::identity();
 
         return new Sequence((function () use ($selector) {
             foreach ($this as $ele) {
@@ -354,7 +354,7 @@ class Sequence extends \IteratorIterator
      */
     public function toDictionary(callable $keySelector, ?callable $valueSelector = null): Dictionary
     {
-        $getValue = $valueSelector ?? function ($x) {return $x;};
+        $getValue = $valueSelector ?? Lambda::identity();
 
         $keyValuePairs = [];
         foreach ($this as $item) {

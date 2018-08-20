@@ -4,6 +4,7 @@ namespace Tests;
 use function Jcstrandburg\Demeter\dictionary;
 use function Jcstrandburg\Demeter\sequence;
 use Jcstrandburg\Demeter\Dictionary;
+use Jcstrandburg\Demeter\Lambda;
 use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
@@ -25,9 +26,7 @@ class DictionaryTest extends TestCase
             ['name' => 'jimmy'],
             ['name' => 'james'],
             ['name' => 'jimmy'],
-        ])->toDictionary(function ($x) {
-            return $x['name'];
-        });
+        ])->toDictionary(Lambda::selectKey('name'));
     }
 
     public function testDictionaryGetNonExistentKey()
@@ -116,7 +115,7 @@ class DictionaryTest extends TestCase
                 'key2' => 100,
                 'key3' => 200,
             ],
-            $this->getTestDictionary()->dictionaryMap(function ($x) {return $x / 2;})->toArray());
+            $this->getTestDictionary()->dictionaryMap(Lambda::divideBy(2))->toArray());
     }
 
     public function testGetKeys()

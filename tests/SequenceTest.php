@@ -2,6 +2,7 @@
 namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
+use Jcstrandburg\Demeter\Lambda;
 use Jcstrandburg\Demeter\Sequence;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ class SequenceTest extends TestCase
 
     public function testMap()
     {
-        $c = sequence(self::SOURCE)->map(function ($x) {return $x * 2;})->toArray();
+        $c = sequence(self::SOURCE)->map(Lambda::multiplyBy(2))->toArray();
         $this->assertEquals([2, 4, 6, 8, 10, 12, 14, 16, 18, 20], $c);
     }
 
@@ -30,7 +31,7 @@ class SequenceTest extends TestCase
             [2, 4, 6, 8, 10],
             sequence([[1, 2], [3], [4, 5]])
                 ->flatMap(function ($x) {
-                    return array_map(function ($y) {return $y * 2;}, $x);
+                    return array_map(Lambda::multiplyBy(2), $x);
                 })
                 ->toArray());
     }
@@ -49,7 +50,7 @@ class SequenceTest extends TestCase
 
     public function testFilter()
     {
-        $c = sequence(self::SOURCE)->filter(function ($x) {return $x % 2 == 0;})->toArray();
+        $c = sequence(self::SOURCE)->filter(Lambda::isEven())->toArray();
         $this->assertEquals([2, 4, 6, 8, 10], $c);
     }
 
@@ -69,7 +70,7 @@ class SequenceTest extends TestCase
     {
         $c = sequence([])
             ->concat([1, 2, 3, 4])
-            ->map(function ($x) {return $x * 3;})
+            ->map(Lambda::multiplyBy(3))
             ->filter(function ($y) {return $y > 3 && $y <= 9;})
             ->append(10)
             ->toArray();
@@ -81,8 +82,8 @@ class SequenceTest extends TestCase
     {
         $s = sequence([1, 2, 3, 4, 5]);
 
-        $evens = $s->filter(function ($x) {return $x % 2 == 0;})->toArray();
-        $odds = $s->filter(function ($x) {return $x % 2 == 1;})->toArray();
+        $evens = $s->filter(Lambda::isEven())->toArray();
+        $odds = $s->filter(Lambda::isOdd())->toArray();
 
         $this->assertEquals([2, 4], $evens);
         $this->assertEquals([1, 3, 5], $odds);
@@ -98,15 +99,15 @@ class SequenceTest extends TestCase
     {
         $this->assertEquals(
             [3, 2, 2, 2],
-            sequence([1, 1, 1, 3, 2, 2, 2])->skipWhile(function ($x) {return $x < 3;})->toArray());
+            sequence([1, 1, 1, 3, 2, 2, 2])->skipWhile(Lambda::isLessThan(3))->toArray());
 
         $this->assertEquals(
             [],
-            sequence([2, 3, 4])->skipWhile(function ($x) {return $x < 5;})->toArray());
+            sequence([2, 3, 4])->skipWhile(Lambda::isLessThan(5))->toArray());
 
         $this->assertEquals(
             [2, 3, 4],
-            sequence([2, 3, 4])->skipWhile(function ($x) {return $x < 2;})->toArray());
+            sequence([2, 3, 4])->skipWhile(Lambda::isLessThan(2))->toArray());
     }
 
     public function testTake()
@@ -119,15 +120,15 @@ class SequenceTest extends TestCase
     {
         $this->assertEquals(
             [1, 1, 1],
-            sequence([1, 1, 1, 2, 1, 1, 1])->takeWhile(function ($x) {return $x < 2;})->toArray());
+            sequence([1, 1, 1, 2, 1, 1, 1])->takeWhile(Lambda::isLessThan(2))->toArray());
 
         $this->assertEquals(
             [],
-            sequence([2, 3, 4])->takeWhile(function ($x) {return $x < 2;})->toArray());
+            sequence([2, 3, 4])->takeWhile(Lambda::isLessThan(2))->toArray());
 
         $this->assertEquals(
             [2, 3, 4],
-            sequence([2, 3, 4])->takeWhile(function ($x) {return $x < 5;})->toArray());
+            sequence([2, 3, 4])->takeWhile(Lambda::isLessThan(5))->toArray());
     }
 
     public function testSlice()
@@ -138,14 +139,11 @@ class SequenceTest extends TestCase
 
     public function testFold()
     {
-        $add = function ($a, $b) {return $a + $b;};
-        $mul = function ($a, $b) {return $a * $b;};
+        $this->assertEquals(0, sequence([])->fold(0, Lambda::multiply()));
+        $this->assertEquals(1, sequence([])->fold(1, Lambda::multiply()));
+        $this->assertEquals(24, sequence([2, 3, 4])->fold(1, Lambda::multiply()));
 
-        $this->assertEquals(0, sequence([])->fold(0, $mul));
-        $this->assertEquals(1, sequence([])->fold(1, $mul));
-        $this->assertEquals(24, sequence([2, 3, 4])->fold(1, $mul));
-
-        $this->assertEquals(10, sequence([1, 2, 3, 4])->fold(0, $add));
+        $this->assertEquals(10, sequence([1, 2, 3, 4])->fold(0, Lambda::add()));
     }
 
     public function testAll()
@@ -173,17 +171,14 @@ class SequenceTest extends TestCase
         $evens = sequence([2, 4, 6, 8]);
         $mixed = sequence([1, 2, 3, 4]);
 
-        $is_odd = function ($x) {return $x % 2 == 1;};
-        $is_even = function ($x) {return $x % 2 == 0;};
+        $this->assertTrue($odds->any(Lambda::isOdd()));
+        $this->assertFalse($odds->any(Lambda::isEven()));
 
-        $this->assertTrue($odds->any($is_odd));
-        $this->assertFalse($odds->any($is_even));
+        $this->assertFalse($evens->any(Lambda::isOdd()));
+        $this->assertTrue($evens->any(Lambda::isEven()));
 
-        $this->assertFalse($evens->any($is_odd));
-        $this->assertTrue($evens->any($is_even));
-
-        $this->assertTrue($mixed->any($is_odd));
-        $this->assertTrue($mixed->any($is_even));
+        $this->assertTrue($mixed->any(Lambda::isOdd()));
+        $this->assertTrue($mixed->any(Lambda::isEven()));
     }
 
     public function testFirst()
@@ -194,7 +189,7 @@ class SequenceTest extends TestCase
         $this->assertEquals(11, $source->first(function ($x) {return $x > 10;}));
 
         $this->expectException(\LogicException::class);
-        $source->first(function ($x) {return $x > 12;});
+        $source->first(Lambda::isGreaterThan(12));
     }
 
     public function testFirstOrNull()
@@ -202,8 +197,8 @@ class SequenceTest extends TestCase
         $source = sequence([1, 10, 11, 12]);
 
         $this->assertEquals(1, $source->firstOrNull());
-        $this->assertEquals(11, $source->firstOrNull(function ($x) {return $x > 10;}));
-        $this->assertEquals(null, $source->firstOrNull(function ($x) {return $x > 12;}));
+        $this->assertEquals(11, $source->firstOrNull(Lambda::isGreaterThan(10)));
+        $this->assertEquals(null, $source->firstOrNull(Lambda::isGreaterThan(12)));
     }
 
     public function testLast()
@@ -211,10 +206,10 @@ class SequenceTest extends TestCase
         $source = sequence([1, 10, 11, 12]);
 
         $this->assertEquals(12, $source->last());
-        $this->assertEquals(10, $source->last(function ($x) {return $x < 11;}));
+        $this->assertEquals(10, $source->last(Lambda::isLessThan(11)));
 
         $this->expectException(\LogicException::class);
-        $source->last(function ($x) {return $x > 12;});
+        $source->last(Lambda::isGreaterThan(12));
     }
 
     public function testLastOrNull()
@@ -222,10 +217,10 @@ class SequenceTest extends TestCase
         $source = sequence([1, 10, 11, 12]);
 
         $this->assertEquals(12, $source->last());
-        $this->assertEquals(10, $source->last(function ($x) {return $x < 11;}));
+        $this->assertEquals(10, $source->last(Lambda::isLessThan(11)));
 
         $this->expectException(\LogicException::class);
-        $this->assertEquals(null, $source->last(function ($x) {return $x > 12;}));
+        $this->assertEquals(null, $source->last(Lambda::isGreaterThan(12)));
     }
 
     public function testSingle()
@@ -233,13 +228,13 @@ class SequenceTest extends TestCase
         $this->assertEquals(1, sequence([1])->single());
         $this->assertEquals(1, sequence([1])->singleOrNull());
 
-        $this->assertEquals(2, sequence([1, 2, 3])->single(function ($x) {return $x % 2 == 0;}));
-        $this->assertEquals(2, sequence([1, 2, 3])->singleOrNull(function ($x) {return $x % 2 == 0;}));
+        $this->assertEquals(2, sequence([1, 2, 3])->single(Lambda::isEven()));
+        $this->assertEquals(2, sequence([1, 2, 3])->singleOrNull(Lambda::isEven()));
 
-        $this->assertEquals(null, sequence([1, 2, 3])->singleOrNull(function ($x) {return $x > 3;}));
+        $this->assertEquals(null, sequence([1, 2, 3])->singleOrNull(Lambda::isGreaterThan(3)));
 
         $this->expectException(\LogicException::class);
-        sequence([1, 2, 3])->single(function ($x) {return $x > 3;});
+        sequence([1, 2, 3])->single(Lambda::isGreaterThan(3));
     }
 
     public function testEmpty()

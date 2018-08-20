@@ -3,6 +3,7 @@ namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
 use Jcstrandburg\Demeter\GroupedCollection;
+use Jcstrandburg\Demeter\Lambda;
 use PHPUnit\Framework\TestCase;
 
 class GroupedCollectionTest extends TestCase
@@ -29,9 +30,7 @@ class GroupedCollectionTest extends TestCase
             ['species' => 'cat', 'name' => 'Thelma'],
             ['species' => 'dog', 'name' => 'Diogenes'],
             ['species' => 'bat', 'name' => 'Viktor'],
-        ])->groupBy(function ($x) {
-            return $x['species'];
-        });
+        ])->groupBy(Lambda::selectKey('species'));
 
         $this->assertEquals(['cat', 'dog', 'bat'], $groups->getGroupKeys());
         foreach ($groups->getGroupKeys() as $key) {
