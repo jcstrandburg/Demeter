@@ -36,6 +36,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Added
+* Add `dictionary` and `set` factory functions
+
 ### 0.4
 
 #### Added

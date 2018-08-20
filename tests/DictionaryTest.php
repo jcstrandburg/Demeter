@@ -1,12 +1,23 @@
 <?php
 namespace Tests;
 
+use function Jcstrandburg\Demeter\dictionary;
 use function Jcstrandburg\Demeter\sequence;
 use Jcstrandburg\Demeter\Dictionary;
 use PHPUnit\Framework\TestCase;
 
 class DictionaryTest extends TestCase
 {
+    public function testFactoryFunction()
+    {
+        $x = dictionary(['a' => 'abc', 'b' => 'def']);
+        $this->assertInstanceOf(Dictionary::class, $x);
+        $this->assertEquals('abc', $x['a']);
+
+        $y = dictionary($x);
+        $this->assertEquals($x, $y);
+    }
+
     public function testToDictionaryWithDuplicateKeys()
     {
         $this->expectException(\LogicException::class);

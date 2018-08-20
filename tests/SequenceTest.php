@@ -2,11 +2,21 @@
 namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
+use Jcstrandburg\Demeter\Sequence;
 use PHPUnit\Framework\TestCase;
 
 class SequenceTest extends TestCase
 {
     const SOURCE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    public function testFactoryFunction()
+    {
+        $s = sequence([1, 2, 3]);
+        $this->assertInstanceOf(Sequence::class, $s);
+
+        $t = sequence($s);
+        $this->assertEquals($s, $t);
+    }
 
     public function testMap()
     {

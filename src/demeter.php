@@ -11,6 +11,16 @@ function collect(iterable $seq)
     return $seq instanceof Collection ? $seq : new Collection($seq);
 }
 
+function set(iterable $seq)
+{
+    return $seq instanceof HashSet ? $seq : new HashSet($seq);
+}
+
+function dictionary(iterable $dict)
+{
+    return $dict instanceof Dictionary ? $dict : new Dictionary($dict);
+}
+
 function xrange(int $start, int $end, int $step = 1)
 {
     foreach (range($start, $end, $step) as $y) {

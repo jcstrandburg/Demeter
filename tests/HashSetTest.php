@@ -2,11 +2,21 @@
 namespace Tests;
 
 use function \Jcstrandburg\Demeter\sequence;
+use function \Jcstrandburg\Demeter\set;
 use Jcstrandburg\Demeter\HashSet;
 use PHPUnit\Framework\TestCase;
 
 class HashSetTest extends TestCase
 {
+    public function testFactoryFunction()
+    {
+        $s = set([1, 2, 3]);
+        $this->assertInstanceOf(HashSet::class, $s);
+
+        $t = set($s);
+        $this->assertEquals($s, $t);
+    }
+
     public function testAddAndRemove()
     {
         $empty = new HashSet();
