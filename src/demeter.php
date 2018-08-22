@@ -75,7 +75,7 @@ function ezhash($value)
     if (is_array($value)) {
         return md5(serialize($value));
     } else if (is_object($value)) {
-        return md5(spl_object_hash());
+        return md5(spl_object_hash($value));
     } else {
         return md5($value);
     }

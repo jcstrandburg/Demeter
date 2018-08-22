@@ -37,6 +37,10 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Changed
+* Breaking: Changed the behavior of `HashSet` so that it acts like a proper set (hashing is used for buckets but not equality comparisons)
+
+
 #### Added
 * Add `Lambda` utility class
 * Add `dictionary` and `set` factory functions

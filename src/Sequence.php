@@ -338,12 +338,13 @@ class Sequence extends \IteratorIterator
 
     /**
      * Converts the sequence to a HashSet, using the given hash function (or the default if none is provided)
-     * @param   callable|nulll  $hashFunction
+     * @param   callable|null  $compareFunction
+     * @param   callable|null  $hashFunction
      * @return  HashSet
      */
-    public function asSet(?callable $hashFunction = null): HashSet
+    public function asSet(?callable $compareFunction = null, ?callable $hashFunction = null): HashSet
     {
-        return HashSet::from($this, $hashFunction);
+        return HashSet::from($this, $compareFunction, $hashFunction);
     }
 
     /**

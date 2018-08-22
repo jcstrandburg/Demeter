@@ -128,4 +128,15 @@ class Lambda
             return $x <= $y;
         };
     }
+
+    public static function getOffSet($array): callable
+    {
+        if (!is_array($array) && !($array instanceof \ArrayAccess)) {
+            throw new \ArgumentException("\$array must be of type 'array' or '\ArrayAccess'");
+        }
+
+        return function ($x) use ($array) {
+            return $array[$x];
+        };
+    }
 }
