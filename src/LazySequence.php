@@ -362,7 +362,7 @@ class LazySequence extends \IteratorIterator implements Sequence
             $keyValuePairs[] = [($keySelector)($item), ($getValue)($item)];
         }
 
-        return Dictionary::from($keyValuePairs);
+        return ArrayDictionary::fromPairs($keyValuePairs);
     }
 
     /**

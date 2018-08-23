@@ -16,9 +16,9 @@ function set(iterable $seq)
     return $seq instanceof HashSet ? $seq : new HashSet($seq);
 }
 
-function dictionary(iterable $dict)
+function dictionary(iterable $dict): Dictionary
 {
-    return $dict instanceof Dictionary ? $dict : new Dictionary($dict);
+    return $dict instanceof Dictionary ? $dict : new ArrayDictionary($dict);
 }
 
 function xrange(int $start, int $end, int $step = 1)

@@ -31,7 +31,7 @@ class DictionaryTest extends TestCase
 
     public function testDictionaryGetNonExistentKey()
     {
-        $dict = new Dictionary(['key1' => 0]);
+        $dict = dictionary(['key1' => 0]);
         $this->assertEquals(0, $dict['key1']);
 
         $this->expectException(\OutOfBoundsException::class);
@@ -130,7 +130,7 @@ class DictionaryTest extends TestCase
 
     private function getTestDictionary()
     {
-        return new Dictionary([
+        return dictionary([
             'key1' => 100,
             'key2' => 200,
             'key3' => 400,
