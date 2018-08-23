@@ -39,9 +39,13 @@ $x = sequence([1, 2, 3, 4, 5])
 
 #### Changed
 * Breaking: Changed the behavior of `HashSet` so that it acts like a proper set (hashing is used for buckets but not equality comparisons)
-
+* Breaking: Convert `Sequence` to an interface, with the existing implementation becoming `LazySequence`
+* Breaking: Convert `Collection` to an interface, with the existing implementation becoming `ArrayCollection`
+* Breaking: Convert `Dictionary` to an interface, with the existing implementation becoming `ArrayDictionary`
+* Breaking: Functions previously returning `HashSet` now return `Set`
 
 #### Added
+* Introduce `Set` interface which `HashSet` implements
 * `Sequence::except` and `Sequence::intersect`
 * `Lambda` utility class
 * `dictionary` and `set` factory functions
