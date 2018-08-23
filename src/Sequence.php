@@ -365,6 +365,32 @@ class Sequence extends \IteratorIterator
         return Dictionary::from($keyValuePairs);
     }
 
+    /**
+     * Filters out all elements that exist in the given iterable. The remaining elements are not guaranteed to be distinct.
+     * @param   iterable    $items
+     * @param   callable|null   $equalityFunction   Leave default for the default used by HashFunction
+     * @param   callable|null   $hashFunction   Leave default for the default used by HashFunction
+     * @return  Sequence
+     */
+    public function except(iterable $items, ?callable $equalityFunction = null, ?callable $hashFunction = null): Sequence
+    {
+        $set = HashSet::from($items, $equalityFunction, $hashFunction);
+        return $this->filter(Lambda::setDoesNotContain($set));
+    }
+
+    /**
+     * Filters out all elements that do not exist in the given iterable. The remaining elements are not guaranteed to be distinct.
+     * @param   iterable    $items
+     * @param   callable|null   $equalityFunction   Leave default for the default used by HashFunction
+     * @param   callable|null   $hashFunction   Leave default for the default used by HashFunction
+     * @return  Sequence
+     */
+    public function intersect(iterable $items, ?callable $equalityFunction = null, ?callable $hashFunction = null): Sequence
+    {
+        $set = HashSet::from($items, $equalityFunction, $hashFunction);
+        return $this->filter(Lambda::setContains($set));
+    }
+
     public function __toString()
     {
         return "<Sequence>";

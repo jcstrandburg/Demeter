@@ -237,6 +237,20 @@ class SequenceTest extends TestCase
         sequence([1, 2, 3])->single(Lambda::isGreaterThan(3));
     }
 
+    public function testExcept()
+    {
+        $this->assertEquals(
+            [1, 2, 2, 3],
+            sequence([0, 1, 2, 2, 3, 5])->except([5, 0])->toArray());
+    }
+
+    public function testIntersect()
+    {
+        $this->assertEquals(
+            [1, 2, 2, 3],
+            sequence([0, 1, 2, 2, 3, 5])->intersect([3, 2, 1])->toArray());
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());

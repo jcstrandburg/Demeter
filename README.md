@@ -42,8 +42,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 
 #### Added
-* Add `Lambda` utility class
-* Add `dictionary` and `set` factory functions
+* `Sequence::except` and `Sequence::intersect`
+* `Lambda` utility class
+* `dictionary` and `set` factory functions
 
 ### 0.4
 

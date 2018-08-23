@@ -139,4 +139,18 @@ class Lambda
             return $array[$x];
         };
     }
+
+    public static function setContains(HashSet $set)
+    {
+        return function ($x) use ($set) {
+            return $set->contains($x);
+        };
+    }
+
+    public static function setDoesNotContain(HashSet $set)
+    {
+        return function ($x) use ($set) {
+            return !$set->contains($x);
+        };
+    }
 }
