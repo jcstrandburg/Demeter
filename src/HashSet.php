@@ -4,7 +4,7 @@ namespace Jcstrandburg\Demeter;
 /**
  * A collection in which each item is guaranteed to be unique by hash
  */
-class HashSet extends Collection
+class HashSet extends ArrayCollection
 {
     private $hashMap;
     private $equalityFunction;

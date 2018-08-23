@@ -1,14 +1,14 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-function sequence(iterable $seq)
+function sequence(iterable $seq): Sequence
 {
-    return $seq instanceof Sequence ? $seq : new Sequence($seq);
+    return $seq instanceof Sequence ? $seq : new LazySequence($seq);
 }
 
-function collect(iterable $seq)
+function collect(iterable $seq): Collection
 {
-    return $seq instanceof Collection ? $seq : new Collection($seq);
+    return $seq instanceof Collection ? $seq : new ArrayCollection($seq);
 }
 
 function set(iterable $seq)
@@ -31,7 +31,7 @@ function xrange(int $start, int $end, int $step = 1)
 function repeat(iterable $seq, int $count)
 {
     if ($count == 0) {
-        return Sequence::empty();
+        return LazySequence::empty();
     } else if ($count < 0) {
         throw new \InvalildArgumentException("\$count must be non-negative");
     }

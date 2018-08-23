@@ -1,7 +1,7 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-class Grouping extends Collection
+class Grouping extends ArrayCollection
 {
     public function __construct(iterable $seq, $groupKey)
     {

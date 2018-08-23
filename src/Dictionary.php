@@ -1,7 +1,7 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-class Dictionary extends Collection implements \ArrayAccess
+class Dictionary extends ArrayCollection implements \ArrayAccess
 {
     private $dict;
 
@@ -15,7 +15,7 @@ class Dictionary extends Collection implements \ArrayAccess
      */
     public function getKeys(): Collection
     {
-        return new Collection(array_keys($this->dict));
+        return new ArrayCollection(array_keys($this->dict));
     }
 
     /**
@@ -23,7 +23,7 @@ class Dictionary extends Collection implements \ArrayAccess
      */
     public function getValues(): Collection
     {
-        return new Collection(array_values($this->dict));
+        return new ArrayCollection(array_values($this->dict));
     }
 
     /**

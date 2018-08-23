@@ -1,7 +1,7 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-class GroupedCollection extends Collection implements \ArrayAccess
+class GroupedCollection extends ArrayCollection implements \ArrayAccess
 {
     private $groupsByKey;
 
