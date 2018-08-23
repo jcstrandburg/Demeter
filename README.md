@@ -66,7 +66,7 @@ $x = sequence([1, 2, 3, 4, 5])
 * `Sequence::single`
 * `Sequence::singleOrNull`
 #### Changed
-* `sequence` and `collect` now will return their argument unmodified it is already of the correct type
+* `sequence` and `collect` now will return their argument unmodified if is already of the correct type
 
 ### 0.2
 
