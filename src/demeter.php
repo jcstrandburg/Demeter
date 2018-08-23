@@ -11,9 +11,9 @@ function collect(iterable $seq): Collection
     return $seq instanceof Collection ? $seq : new ArrayCollection($seq);
 }
 
-function set(iterable $seq)
+function set(iterable $seq): Set
 {
-    return $seq instanceof HashSet ? $seq : new HashSet($seq);
+    return $seq instanceof Set ? $seq : new HashSet($seq);
 }
 
 function dictionary(iterable $dict): Dictionary

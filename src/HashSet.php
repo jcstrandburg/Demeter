@@ -4,7 +4,7 @@ namespace Jcstrandburg\Demeter;
 /**
  * A collection in which each item is guaranteed to be unique by hash
  */
-class HashSet extends ArrayCollection
+class HashSet extends ArrayCollection implements Set
 {
     private $hashMap;
     private $equalityFunction;
@@ -43,7 +43,7 @@ class HashSet extends ArrayCollection
      * Returns a copy of this set guaranteed to contain the given item (or one with an identical hash)
      * @param   mixed   $item
      */
-    public function add($item): HashSet
+    public function add($item): Set
     {
         return $this->addCore([$item]);
     }
@@ -52,7 +52,7 @@ class HashSet extends ArrayCollection
      * Returns a copy of this set guaranteed to contain the given items (or items with a identical hashes)
      * @param   mixed   $item
      */
-    public function addMany(iterable $items): HashSet
+    public function addMany(iterable $items): Set
     {
         return $this->addCore($items);
     }
@@ -63,7 +63,7 @@ class HashSet extends ArrayCollection
         return ($hashMap === $this->hashMap) ? $this : new HashSet($hashMap, $this->equalityFunction, $this->hashFunction, true);
     }
 
-    private function addItemsToArray(array $in, iterable $items)
+    private function addItemsToArray(array $in, iterable $items): array
     {
         $returnMe = $in;
         foreach ($items as $item) {
@@ -89,7 +89,7 @@ class HashSet extends ArrayCollection
      * Returns a copy of this set guaranteed not to contain the given item (or any with an identical hash)
      * @param   mixed   $item
      */
-    public function remove($item): HashSet
+    public function remove($item): Set
     {
         return $this->removeCore([$item]);
     }
@@ -98,7 +98,7 @@ class HashSet extends ArrayCollection
      * Returns a copy of this set guaranteed not to contain the given items (or any with identical hashes)
      * @param   mixed   $item
      */
-    public function removeMany(iterable $items): HashSet
+    public function removeMany(iterable $items): Set
     {
         return $this->removeCore($items);
     }
@@ -109,7 +109,7 @@ class HashSet extends ArrayCollection
         return ($hashMap === $this->hashMap) ? $this : new HashSet($hashMap, $this->equalityFunction, $this->hashFunction, true);
     }
 
-    private function removeItemsFromArray(array $array, iterable $items)
+    private function removeItemsFromArray(array $array, iterable $items): array
     {
         $returnMe = $array;
 
@@ -138,7 +138,7 @@ class HashSet extends ArrayCollection
      * Returns true if this set contains the given item (or one with an identical hash)
      * @param   mixed   $item
      */
-    public function contains($item)
+    public function contains($item): bool
     {
         $hash = ($this->hashFunction)($item);
 

@@ -140,14 +140,14 @@ class Lambda
         };
     }
 
-    public static function setContains(HashSet $set)
+    public static function setContains(Set $set)
     {
         return function ($x) use ($set) {
             return $set->contains($x);
         };
     }
 
-    public static function setDoesNotContain(HashSet $set)
+    public static function setDoesNotContain(Set $set)
     {
         return function ($x) use ($set) {
             return !$set->contains($x);
