@@ -34,6 +34,8 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.5
+
 #### Changed
 * Breaking: Changed the behavior of `HashSet` so that it acts like a proper set (hashing is used for buckets but not equality comparisons)
 * Breaking: Convert `Sequence` to an interface, with the existing implementation becoming `LazySequence`
