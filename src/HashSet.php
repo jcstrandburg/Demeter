@@ -50,7 +50,7 @@ class HashSet extends ArrayCollection implements Set
 
     /**
      * Returns a copy of this set guaranteed to contain the given items (or items with a identical hashes)
-     * @param   mixed   $item
+     * @param   iterable    $items
      */
     public function addMany(iterable $items): Set
     {
@@ -96,7 +96,7 @@ class HashSet extends ArrayCollection implements Set
 
     /**
      * Returns a copy of this set guaranteed not to contain the given items (or any with identical hashes)
-     * @param   mixed   $item
+     * @param   iterable    $items
      */
     public function removeMany(iterable $items): Set
     {

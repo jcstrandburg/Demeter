@@ -4,7 +4,7 @@ This library provides a set of immutable collection classes that allow for an co
 
 ### Installing
 
-`composer installl jcstrandburg\demeter`
+`composer require jcstrandburg\demeter`
 
 ### Usage
 
@@ -59,6 +59,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### 0.3
 
+#### Changed
+* `sequence` and `collect` now will return their argument unmodified if is already of the correct type
+
 #### Added
 * `HashSet`
 * `Sequence::asSet`
@@ -68,8 +71,6 @@ $x = sequence([1, 2, 3, 4, 5])
 * `Sequence::lastOrNull`
 * `Sequence::single`
 * `Sequence::singleOrNull`
-#### Changed
-* `sequence` and `collect` now will return their argument unmodified if is already of the correct type
 
 ### 0.2
 
