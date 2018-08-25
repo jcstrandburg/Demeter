@@ -175,12 +175,12 @@ class ArrayDictionary extends ArrayCollection implements Dictionary
 
     public function offsetSet($key, $value)
     {
-        throw new \BadMethodCallException("Dictionary does not support offsetSet");
+        throw new \BadMethodCallException("ArrayDictionary does not support offsetSet");
     }
 
     public function offsetUnset($key)
     {
-        throw new \BadMethodCallException("Dictionary does not support offsetUnset");
+        throw new \BadMethodCallException("ArrayDictionary does not support offsetUnset");
     }
 
     /**
