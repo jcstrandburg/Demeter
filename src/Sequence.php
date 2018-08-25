@@ -10,13 +10,13 @@ interface Sequence extends \Iterator
     public function map(callable $selector): Sequence;
 
     /**
-     * @param   callable|null   $selector Mapper (leave null for the identity function). Must return an iterable
+     * @param   callable|null   $selector   Mapper (leave null for the identity function). Must return an iterable
      * @return  Sequence    A new Sequence that is a flattening of the iterable mappings of each element in the original sequence.
      */
     public function flatMap(callable $selector = null);
 
     /**
-     * @param   callable    $predicate Returns a truthy value if an element should be returned in the new Sequence
+     * @param   callable    $predicate  Returns a truthy value if an element should be returned in the new Sequence
      * @return  Sequence    A new sequence where every element passed $predicate
      */
     public function filter(callable $predicate): Sequence;
@@ -30,21 +30,21 @@ interface Sequence extends \Iterator
 
     /**
      * Creates a new Sequence with the given iterable concatenated to it
-     * @param   mixed $ele
+     * @param   iterable    $elements
      * @return  Sequence
      */
     public function concat(iterable $elements): Sequence;
 
     /**
      * Creates a new Sequence without the first $offset elements of this Sequence
-     * @param   mixed $ele
+     * @param   int $offset
      * @return  Sequence
      */
     public function skip(int $offset): Sequence;
 
     /**
      * Creates a new Sequence without all contigous elements at the beginning of the Sequence that don't pass $accept
-     * @param   calllable   $accept Callback that returns a truthy value if the current element should be skipped
+     * @param   callable   $accept  Callback that returns a truthy value if the current element should be skipped
      */
     public function skipWhile(callable $accept): Sequence;
 
@@ -57,7 +57,7 @@ interface Sequence extends \Iterator
 
     /**
      * Creates a new Sequence with all elements that pass $accept and are contigous at the beginning of the Sequence
-     * @param   calllable   $accept Callback that returns a truthy value if the current element should be taken
+     * @param   callable   $accept  Callback that returns a truthy value if the current element should be taken
      */
     public function takeWhile(callable $accept): Sequence;
 
@@ -72,6 +72,7 @@ interface Sequence extends \Iterator
     /**
      * Accumulates and returns a value from each element in the sequence.
      * @param   mixed   $initial    The seed value fed into the accumulator. Must be of the form ($currentValue, $currentElement) -> $nextValue
+     * @param   callable    $folder Accumulator function
      * @return  mixed
      */
     public function fold($initial, callable $folder);
@@ -79,14 +80,14 @@ interface Sequence extends \Iterator
     /**
      * Returns true if the given predicate returns a truthy value for any elements, else false.
      * The sequence will not be evaluated beyond the first elements that passes the predicate.
-     * @param   calllable   $predicate
+     * @param   callable   $predicate
      */
     public function any(callable $predicate): bool;
 
     /**
      * Returns true if the given predicate returns a truthy value for all elements, else false.
      * The sequence will not be evaluated beyond the first elements that does not pass the predicate.
-     * @param   calllable   $predicate
+     * @param   callable   $predicate
      */
     public function all(callable $predicate): bool;
 

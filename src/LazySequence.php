@@ -62,7 +62,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     /**
      * Creates a new Sequence with the given iterable concatenated to it
-     * @param   mixed $ele
+     * @param   iterable    $elements
      * @return  Sequence
      */
     public function concat(iterable $elements): Sequence
@@ -75,7 +75,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     /**
      * Creates a new Sequence without the first $offset elements of this Sequence
-     * @param   mixed $ele
+     * @param   int $offsett
      * @return  Sequence
      */
     public function skip(int $offset): Sequence
@@ -91,7 +91,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     /**
      * Creates a new Sequence without all contigous elements at the beginning of the Sequence that don't pass $accept
-     * @param   calllable   $accept Callback that returns a truthy value if the current element should be skipped
+     * @param   callable   $accept  Callback that returns a truthy value if the current element should be skipped
      */
     public function skipWhile(callable $accept): Sequence
     {
@@ -116,7 +116,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     /**
      * Creates a new Sequence with all elements that pass $accept and are contigous at the beginning of the Sequence
-     * @param   calllable   $accept Callback that returns a truthy value if the current element should be taken
+     * @param   callable   $accept Callback that returns a truthy value if the current element should be taken
      */
     public function takeWhile(callable $accept): Sequence
     {
@@ -137,6 +137,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     /**
      * Accumulates and returns a value from each element in the sequence.
      * @param   mixed   $initial    The seed value fed into the accumulator. Must be of the form ($currentValue, $currentElement) -> $nextValue
+     * @param   callable    $folder Accumulator function
      * @return  mixed
      */
     public function fold($initial, callable $folder)
@@ -151,7 +152,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     /**
      * Returns true if the given predicate returns a truthy value for any elements, else false.
      * The sequence will not be evaluated beyond the first elements that passes the predicate.
-     * @param   calllable   $predicate
+     * @param   callable   $predicate
      */
     public function any(callable $predicate): bool
     {
@@ -167,7 +168,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     /**
      * Returns true if the given predicate returns a truthy value for all elements, else false.
      * The sequence will not be evaluated beyond the first elements that does not pass the predicate.
-     * @param   calllable   $predicate
+     * @param   callable   $predicate
      */
     public function all(callable $predicate): bool
     {
