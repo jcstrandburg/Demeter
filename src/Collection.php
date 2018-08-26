@@ -6,4 +6,5 @@ namespace Jcstrandburg\Demeter;
  */
 interface Collection extends Sequence
 {
+    public function count(): int;
 }

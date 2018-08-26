@@ -13,14 +13,14 @@ class ArrayCollection extends LazySequence implements Collection
         parent::__construct($array);
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }
 
     private static $_empty;
 
-    function empty() {
+    function empty(): ArrayCollection {
         return self::$_empty ?? self::$_empty = new ArrayCollection([]);
     }
 }

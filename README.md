@@ -2,11 +2,11 @@
 
 This library provides a set of immutable collection classes that allow for an consistent, object oriented, fluent style of manipulating data collections. It is mainly inspired by LINQ from C# and the Java Stream API.
 
-### Installing
+## Installing
 
 `composer require jcstrandburg\demeter`
 
-### Usage
+## Usage
 
 Vanilla PHP:
 
@@ -29,6 +29,8 @@ $x = sequence([1, 2, 3, 4, 5])
     ->map(Lambda::multiplyBy(2))
     ->take(2);
 ```
+
+## Features
 
 ## Version History
 
