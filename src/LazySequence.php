@@ -200,7 +200,7 @@ class LazySequence extends \IteratorIterator implements Sequence
             $data[$key][] = $ele;
         }
 
-        return new GroupedCollection($data);
+        return new ArrayGroupedCollection($data);
     }
 
     /**
@@ -403,9 +403,6 @@ class LazySequence extends \IteratorIterator implements Sequence
      * @return  Sequence An empty Sequence
      */
     function empty() {
-        if (self::$_empty == null) {
-            self::$_empty = new LazySequence([]);
-        }
-        return self::$_empty;
+        return self::$_empty ?? self::$_empty = new LazySequence([]);
     }
 }

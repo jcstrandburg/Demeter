@@ -2,7 +2,7 @@
 namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
-use Jcstrandburg\Demeter\GroupedCollection;
+use Jcstrandburg\Demeter\ArrayGroupedCollection;
 use Jcstrandburg\Demeter\Lambda;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,7 @@ class GroupedCollectionTest extends TestCase
 {
     public function testGroupedCollection()
     {
-        $g = new GroupedCollection([
+        $g = new ArrayGroupedCollection([
             'a' => [],
             'b' => [1, 2, 3],
             'c' => [[4], [5], [6]],

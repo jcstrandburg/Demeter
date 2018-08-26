@@ -33,6 +33,7 @@ $x = sequence([1, 2, 3, 4, 5])
 ## Version History
 
 ### Unreleased
+* Breaking: Convert `Grouping` and `GroupedCollection` to interfaces.
 
 ### 0.5
 

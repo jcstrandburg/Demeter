@@ -21,10 +21,6 @@ class ArrayCollection extends LazySequence implements Collection
     private static $_empty;
 
     function empty() {
-        if (self::$_empty == null) {
-            self::$_empty = new ArrayCollection([]);
-        }
-
-        return self::$_empty;
+        return self::$_empty ?? self::$_empty = new ArrayCollection([]);
     }
 }

@@ -1,18 +1,7 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-class Grouping extends ArrayCollection
+interface Grouping extends Collection
 {
-    private $groupKey;
-
-    public function __construct(iterable $seq, $groupKey)
-    {
-        parent::__construct($seq);
-        $this->groupKey = $groupKey;
-    }
-
-    public function getGroupKey()
-    {
-        return $this->groupKey;
-    }
+    public function getGroupKey();
 }
