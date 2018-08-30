@@ -4,7 +4,6 @@ namespace Jcstrandburg\Demeter;
 /**
  * A materialized, Countable implementation of Sequence
  */
-interface Collection extends Sequence
+interface Collection extends Sequence, \Countable
 {
-    public function count(): int;
 }
