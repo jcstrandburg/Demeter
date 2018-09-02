@@ -21,14 +21,12 @@ function dictionary(iterable $dict): Dictionary
     return $dict instanceof Dictionary ? $dict : new ArrayDictionary($dict);
 }
 
-function xrange(int $start, int $end, int $step = 1)
+function xrange(int $start, int $end, int $step = 1): Sequence
 {
-    foreach (range($start, $end, $step) as $y) {
-        yield $y;
-    }
+    return sequence(range($start, $end, $step));
 }
 
-function repeat(iterable $seq, int $count)
+function repeat(iterable $seq, int $count): Sequence
 {
     if ($count == 0) {
         return LazySequence::empty();
@@ -36,19 +34,15 @@ function repeat(iterable $seq, int $count)
         throw new \InvalildArgumentException("\$count must be non-negative");
     }
 
-    return sequence((function () use ($seq, $count) {
-        foreach (xrange(1, $count) as $_) {
-            yield from $seq;
-        }
-    })());
+    return xrange(1, $count)->flatMap(Lambda::constant($seq));
 }
 
-function infinite(iterable $seq)
+function infinite(iterable $seq): Sequence
 {
     return sequence(new \InfiniteIterator(as_traversable($seq)));
 }
 
-function as_traversable(iterable $iterable)
+function as_traversable(iterable $iterable): \Traversable
 {
     if ($iterable instanceof \Traversable) {
         return $iterable;
@@ -59,7 +53,7 @@ function as_traversable(iterable $iterable)
     throw new \InvalidArgumentException("Expected \$iterable to of type 'Traversable' or 'array', got type: " . gettype($iterable));
 }
 
-function pick_array(iterable $iterable, int $count)
+function pick_array(iterable $iterable, int $count): array
 {
     if ($count > 0) {
         return iterator_to_array(new \LimitIterator(as_traversable($iterable), 0, $count), false);
@@ -70,7 +64,7 @@ function pick_array(iterable $iterable, int $count)
     }
 }
 
-function ezhash($value)
+function ezhash($value): string
 {
     if (is_array($value)) {
         return md5(serialize($value));

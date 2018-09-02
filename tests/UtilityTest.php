@@ -21,6 +21,7 @@ class UtilityTest extends TestCase
     public function asTraversableProvider()
     {
         return [
+            [(function () {yield 1;yield 2;})()],
             [xrange(1, 3)],
             [[1, 2, 3]],
             [new \ArrayObject([1, 2, 3])],

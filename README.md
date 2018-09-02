@@ -25,9 +25,9 @@ use function Jcstrandburg\Demeter\sequence;
 use Jcstrandburg\Demeter\Lambda;
 
 $x = sequence([1, 2, 3, 4, 5])
-    ->filter(Lambda::isOdd())
-    ->map(Lambda::multiplyBy(2))
-    ->take(2);
+  ->filter(Lambda::isOdd())
+  ->map(Lambda::multiplyBy(2))
+  ->take(2);
 ```
 
 ## Features
@@ -35,7 +35,15 @@ $x = sequence([1, 2, 3, 4, 5])
 ## Version History
 
 ### Unreleased
-* Breaking: Convert `Grouping` and `GroupedCollection` to interfaces.
+
+#### Changed
+* Breaking: Convert `GroupedCollection` to an interface, with the existing implementation becoming `ArrayGroupedCollection`
+* Breaking: Convert `Grouping` to an interface, with the existing implementation becoming `ArrayGrouping`
+* Make `Collection` extend `Countable`
+* `xrange` now returns a `Sequence`
+
+#### Added
+* `Lambda::constant`
 
 ### 0.5
 

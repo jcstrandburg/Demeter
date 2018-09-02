@@ -87,6 +87,13 @@ class Lambda
         };
     }
 
+    public static function constant($x): callable
+    {
+        return function () use ($x) {
+            return $x;
+        };
+    }
+
     public static function selectKey($y): callable
     {
         return function ($x) use ($y) {
