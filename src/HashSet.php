@@ -2,7 +2,7 @@
 namespace Jcstrandburg\Demeter;
 
 /**
- * A collection in which each item is guaranteed to be unique by hash
+ * A collection in which each item is guaranteed to be unique
  */
 class HashSet extends ArrayCollection implements Set
 {
@@ -39,19 +39,11 @@ class HashSet extends ArrayCollection implements Set
         parent::__construct($flat);
     }
 
-    /**
-     * Returns a copy of this set guaranteed to contain the given item (or one with an identical hash)
-     * @param   mixed   $item
-     */
     public function add($item): Set
     {
         return $this->addCore([$item]);
     }
 
-    /**
-     * Returns a copy of this set guaranteed to contain the given items (or items with a identical hashes)
-     * @param   iterable    $items
-     */
     public function addMany(iterable $items): Set
     {
         return $this->addCore($items);
