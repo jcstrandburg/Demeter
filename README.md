@@ -36,6 +36,8 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.6
+
 #### Changed
 * Breaking: Convert `GroupedCollection` to an interface, with the existing implementation becoming `ArrayGroupedCollection`
 * Breaking: Convert `Grouping` to an interface, with the existing implementation becoming `ArrayGrouping`
