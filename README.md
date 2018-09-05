@@ -45,8 +45,11 @@ $x = sequence([1, 2, 3, 4, 5])
 #### Added
 * `Lambda::constant`
 * `Lambda::toArray`
+* `Lambda::getGroupKey`
 * `Sequence::zip`
 * `Sequence::chunk`
+* `Sequence::join`
+* `Sequence::implode`
 
 ### 0.5
 

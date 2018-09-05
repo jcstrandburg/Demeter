@@ -293,6 +293,32 @@ class LazySequence extends \IteratorIterator implements Sequence
         })());
     }
 
+    public function join(iterable $rightSequence, callable $leftKeySelector, callable $rightKeySelector, callable $mapResult): Sequence
+    {
+        $right = sequence($rightSequence);
+
+        $leftDict = $this->groupBy($leftKeySelector)->toDictionary(Lambda::getGroupKey());
+        $rightDict = $right->groupBy($rightKeySelector)->toDictionary(Lambda::getGroupKey());
+
+        $keys = $leftDict->getKeys()->intersect($rightDict->getKeys());
+
+        return $keys->flatMap(function ($key) use ($leftDict, $rightDict) {
+            return $leftDict[$key]->flatMap(function ($leftElement) use ($key, $rightDict) {
+                return $rightDict[$key]->map(function ($rightElement) use ($leftElement) {
+                    return [$leftElement, $rightElement];
+                });
+            });
+        })
+            ->map(function ($elements) use ($mapResult) {
+                return ($mapResult)($elements[0], $elements[1]);
+            });
+    }
+
+    public function implode(string $glue): string
+    {
+        return implode($glue, iterator_to_array($this));
+    }
+
     public function collect(): Collection
     {
         return collect($this);

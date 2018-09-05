@@ -21,6 +21,8 @@ class ArrayGroupedCollection extends ArrayCollection implements GroupedCollectio
         foreach ($groupsByKey as $key => $group) {
             $this->groupsByKey[$key] = new ArrayGrouping($group, $key);
         }
+
+        parent::__construct($this->groupsByKey);
     }
 
     public function getGroupKeys(): array

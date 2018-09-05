@@ -167,4 +167,11 @@ class Lambda
             return $x->toArray();
         };
     }
+
+    public static function getGroupKey()
+    {
+        return function ($x) {
+            return $x->getGroupKey();
+        };
+    }
 }

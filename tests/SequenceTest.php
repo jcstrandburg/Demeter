@@ -291,6 +291,68 @@ class SequenceTest extends TestCase
             LazySequence::empty()->chunk(5)->map(Lambda::toArray())->toArray());
     }
 
+    public function testJoin()
+    {
+        $people = sequence([
+            ['id' => 1, 'name' => 'Bob'],
+            ['id' => 2, 'name' => 'Jim'],
+            ['id' => 3, 'name' => 'Joe'],
+        ]);
+
+        $possessions = sequence([
+            ['personId' => 1, 'name' => 'pants'],
+            ['personId' => 3, 'name' => 'car'],
+            ['personId' => 3, 'name' => 'pillow'],
+        ]);
+
+        $this->assertEquals(
+            [],
+            $people
+                ->join(
+                    $possessions,
+                    Lambda::selectKey('name'),
+                    Lambda::selectKey('name'),
+                    Lambda::constant('This should never get called'))
+                ->toArray());
+
+        $expected = [
+            ['name' => 'Bob', 'possession' => 'pants'],
+            ['name' => 'Joe', 'possession' => 'car'],
+            ['name' => 'Joe', 'possession' => 'pillow'],
+        ];
+
+        $this->assertEquals(
+            $expected,
+            $people
+                ->join(
+                    $possessions,
+                    Lambda::selectKey('id'),
+                    Lambda::selectKey('personId'),
+                    function ($person, $possession) {
+                        return ['name' => $person['name'], 'possession' => $possession['name']];
+                    })
+                ->toArray());
+
+        $this->assertEquals(
+            $expected,
+            $possessions
+                ->join(
+                    $people,
+                    Lambda::selectKey('personId'),
+                    Lambda::selectKey('id'),
+                    function ($possession, $person) {
+                        return ['name' => $person['name'], 'possession' => $possession['name']];
+                    })
+                ->toArray());
+    }
+
+    public function testImplode()
+    {
+        $this->assertEquals(
+            '1, 2, 3, 4, 5',
+            sequence([1, 2, 3, 4, 5])->implode(', '));
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());

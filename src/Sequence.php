@@ -202,6 +202,24 @@ interface Sequence extends \Iterator
     public function chunk(int $count): Sequence;
 
     /**
+     * Performs an inner join of two Sequences
+     * @param   iterable    $rightSequence  The sequence to join with
+     * @param   callable    $leftKeySelector    Function selecting the join key from $this
+     * @param   callable    $rightKeySelector   Function selecting the join key from $rightSequence
+     * @param   callable    $mapResult  Function mapping the joined elements to a result
+     * @return  Sequence
+     */
+    public function join(iterable $rightSequence, callable $leftKeySelector, callable $rightKeySelector, callable $mapResult): Sequence;
+
+    /**
+     * Joins the elements of this Sequence with a string.
+     * @see \implode
+     * @param   string  $glue
+     * @return  string
+     */
+    public function implode(string $glue): string;
+
+    /**
      * Materializes the Sequence to a Collection
      * @return  Collection
      */

@@ -3,6 +3,7 @@ namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
 use Jcstrandburg\Demeter\ArrayGroupedCollection;
+use Jcstrandburg\Demeter\ArrayGrouping;
 use Jcstrandburg\Demeter\Lambda;
 use PHPUnit\Framework\TestCase;
 
@@ -16,10 +17,21 @@ class GroupedCollectionTest extends TestCase
             'c' => [[4], [5], [6]],
         ]);
 
+        $this->assertInstanceOf(ArrayGrouping::class, $g['a']);
         $this->assertEquals([], $g['a']->toArray());
+
+        $this->assertInstanceOf(ArrayGrouping::class, $g['b']);
         $this->assertEquals([1, 2, 3], $g['b']->toArray());
+
+        $this->assertInstanceOf(ArrayGrouping::class, $g['c']);
         $this->assertEquals([[4], [5], [6]], $g['c']->toArray());
+
+        $this->assertInstanceOf(ArrayGrouping::class, $g['d']);
         $this->assertEquals([], $g['d']->toArray());
+
+        foreach ($g as $grouping) {
+            $this->assertInstanceOf(ArrayGrouping::class, $grouping);
+        }
     }
 
     public function testGroupBy()
