@@ -369,8 +369,8 @@ class LazySequence extends \IteratorIterator implements Sequence
     /**
      * Filters out all elements that exist in the given iterable. The remaining elements are not guaranteed to be distinct.
      * @param   iterable    $items
-     * @param   callable|null   $equalityFunction   Leave default for the default used by HashFunction
-     * @param   callable|null   $hashFunction   Leave default for the default used by HashFunction
+     * @param   callable|null   $equalityFunction   Leave default for the default used by HashSet
+     * @param   callable|null   $hashFunction   Leave default for the default used by HashSet
      * @return  Sequence
      */
     public function except(iterable $items, ?callable $equalityFunction = null, ?callable $hashFunction = null): Sequence
@@ -382,8 +382,8 @@ class LazySequence extends \IteratorIterator implements Sequence
     /**
      * Filters out all elements that do not exist in the given iterable. The remaining elements are not guaranteed to be distinct.
      * @param   iterable    $items
-     * @param   callable|null   $equalityFunction   Leave default for the default used by HashFunction
-     * @param   callable|null   $hashFunction   Leave default for the default used by HashFunction
+     * @param   callable|null   $equalityFunction   Leave default for the default used by HashSet
+     * @param   callable|null   $hashFunction   Leave default for the default used by HashSet
      * @return  Sequence
      */
     public function intersect(iterable $items, ?callable $equalityFunction = null, ?callable $hashFunction = null): Sequence
@@ -419,7 +419,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     }
 
     /**
-     * Returns a Sequence of Collections containing exactly $count elements except for the final element
+     * Returns a Sequence of Collections containing at most $count elements
      * @param   int $count
      * @return  Sequence[Collection]
      */
