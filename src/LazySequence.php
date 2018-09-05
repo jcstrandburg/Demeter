@@ -392,6 +392,60 @@ class LazySequence extends \IteratorIterator implements Sequence
         return $this->filter(Lambda::setContains($set));
     }
 
+    /**
+     * Combine the corresponding elements from two sequences
+     * @param   iterable    $seq
+     * @param   callable    $mapper
+     * @return  Sequence
+     */
+    public function zip(iterable $seq, callable $mapper): Sequence
+    {
+        $traversable = as_traversable($seq);
+        $traversable->rewind();
+
+        return sequence((function () use ($traversable, $mapper) {
+            foreach ($this as $x) {
+                if (!$traversable->valid()) {
+                    return;
+                }
+
+                yield ($mapper)($x, $traversable->current());
+
+                if ($traversable !== $this) {
+                    $traversable->next();
+                }
+            }
+        })());
+    }
+
+    /**
+     * Returns a Sequence of Collections containing exactly $count elements except for the final element
+     * @param   int $count
+     * @return  Sequence[Collection]
+     */
+    public function chunk(int $count): Sequence
+    {
+        return new LazySequence((function () use ($count) {
+            $x = $this;
+
+            $x->rewind();
+            while ($x->valid()) {
+                yield $x->take($count)->collect();
+                $x = $x->skip($count);
+                $x->rewind();
+            }
+        })());
+    }
+
+    /**
+     * Materializes the Sequence to a Collection
+     * @return  Collection
+     */
+    public function collect(): Collection
+    {
+        return collect($this);
+    }
+
     public function __toString()
     {
         return "<LazySequence>";

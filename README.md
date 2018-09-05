@@ -44,6 +44,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 #### Added
 * `Lambda::constant`
+* `Lambda::toArray`
+* `Sequence::zip`
+* `Sequence::chunk`
 
 ### 0.5
 

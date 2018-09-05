@@ -185,4 +185,25 @@ interface Sequence extends \Iterator
      * @return  Sequence
      */
     public function intersect(iterable $items, ?callable $equalityFunction = null, ?callable $hashFunction = null): Sequence;
+
+    /**
+     * Combine the corresponding elements from two sequences
+     * @param   iterable    $seq
+     * @param   callable    $mapper
+     * @return  Sequence
+     */
+    public function zip(iterable $seq, callable $mapper): Sequence;
+
+    /**
+     * Returns a Sequence of Collections containing at most $count elements
+     * @param   int $count
+     * @return  Sequence[Collection]
+     */
+    public function chunk(int $count): Sequence;
+
+    /**
+     * Materializes the Sequence to a Collection
+     * @return  Collection
+     */
+    public function collect(): Collection;
 }

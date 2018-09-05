@@ -2,7 +2,9 @@
 namespace Tests;
 
 use function Jcstrandburg\Demeter\sequence;
+use function Jcstrandburg\Demeter\xrange;
 use Jcstrandburg\Demeter\Lambda;
+use Jcstrandburg\Demeter\LazySequence;
 use Jcstrandburg\Demeter\Sequence;
 use PHPUnit\Framework\TestCase;
 
@@ -251,8 +253,47 @@ class SequenceTest extends TestCase
             sequence([0, 1, 2, 2, 3, 5])->intersect([3, 2, 1])->toArray());
     }
 
+    public function testZip()
+    {
+        $generatorSequence = sequence((function () {yield 1;yield 2;yield 3;yield 4;})());
+        $arraySequence = sequence([10, 11, 12]);
+
+        $strJoin = function ($x, $y) {
+            return $x . '-' . $y;
+        };
+
+        $this->assertEquals(
+            ['1-10', '2-11', '3-12'],
+            $generatorSequence->zip($arraySequence, $strJoin)->toArray());
+        $this->assertEquals(
+            ['10-1', '11-2', '12-3'],
+            $arraySequence->zip($generatorSequence, $strJoin)->toArray());
+    }
+
+    public function testChunk()
+    {
+        $s = xrange(1, 6);
+
+        $this->assertEquals(
+            [[1], [2], [3], [4], [5], [6]],
+            $s->chunk(1)->map(Lambda::toArray())->toArray());
+
+        $this->assertEquals(
+            [[1, 2], [3, 4], [5, 6]],
+            $s->chunk(2)->map(Lambda::toArray())->toArray());
+
+        $this->assertEquals(
+            [[1, 2, 3, 4, 5], [6]],
+            $s->chunk(5)->map(Lambda::toArray())->toArray());
+
+        $this->assertEquals(
+            [],
+            LazySequence::empty()->chunk(5)->map(Lambda::toArray())->toArray());
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());
+        $this->assertEquals([], LazySequence::empty()->toArray());
     }
 }

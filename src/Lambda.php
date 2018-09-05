@@ -5,42 +5,42 @@ class Lambda
 {
     public static function isOdd(): callable
     {
-        return function ($x) {
+        return function ($x): bool {
             return $x % 2 == 1;
         };
     }
 
     public static function isEven(): callable
     {
-        return function ($x) {
+        return function ($x): bool {
             return $x % 2 == 0;
         };
     }
 
     public static function isEqualTo($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x == $y;
         };
     }
 
     public static function areEqual(): callable
     {
-        return function ($a, $b) {
+        return function ($a, $b): bool {
             return $a == $b;
         };
     }
 
     public static function isStrictlyEqualTo($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x === $y;
         };
     }
 
     public static function areStrictlyEqual(): callable
     {
-        return function ($a, $b) {
+        return function ($a, $b): bool {
             return $a === $b;
         };
     }
@@ -110,28 +110,28 @@ class Lambda
 
     public static function isGreaterThan($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x > $y;
         };
     }
 
     public static function isGreaterThanOrEquall($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x >= $y;
         };
     }
 
     public static function isLessThan($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x < $y;
         };
     }
 
     public static function isLessThanOrEquall($y): callable
     {
-        return function ($x) use ($y) {
+        return function ($x) use ($y): bool {
             return $x <= $y;
         };
     }
@@ -149,15 +149,22 @@ class Lambda
 
     public static function setContains(Set $set)
     {
-        return function ($x) use ($set) {
+        return function ($x) use ($set): bool {
             return $set->contains($x);
         };
     }
 
     public static function setDoesNotContain(Set $set)
     {
-        return function ($x) use ($set) {
+        return function ($x) use ($set): bool {
             return !$set->contains($x);
+        };
+    }
+
+    public static function toArray()
+    {
+        return function ($x): array{
+            return $x->toArray();
         };
     }
 }
