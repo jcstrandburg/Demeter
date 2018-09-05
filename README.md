@@ -38,6 +38,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### 0.6
 
+#### Fixed
+* Call the parent constructor from `ArrayGroupedCollection`
+
 #### Changed
 * Breaking: Convert `GroupedCollection` to an interface, with the existing implementation becoming `ArrayGroupedCollection`
 * Breaking: Convert `Grouping` to an interface, with the existing implementation becoming `ArrayGrouping`
