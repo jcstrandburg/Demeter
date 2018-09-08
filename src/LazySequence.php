@@ -23,7 +23,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
         return new LazySequence((function () use ($selector) {
             foreach ($this as $ele) {
-                $mapped = ($selector)($ele);
+                $mapped = $selector($ele);
                 if (!is_iterable($mapped)) {
                     throw new \LogicException("\$selector must return an iterable");
                 }
@@ -92,7 +92,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     {
         $currentValue = $initial;
         foreach ($this as $ele) {
-            $currentValue = ($folder)($currentValue, $ele);
+            $currentValue = $folder($currentValue, $ele);
         }
         return $currentValue;
     }
@@ -100,7 +100,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     public function any(callable $predicate): bool
     {
         foreach ($this as $ele) {
-            if (($predicate)($ele)) {
+            if ($predicate($ele)) {
                 return true;
             }
         }
@@ -111,7 +111,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     public function all(callable $predicate): bool
     {
         foreach ($this as $ele) {
-            if (!($predicate)($ele)) {
+            if (!$predicate($ele)) {
                 return false;
             }
         }
@@ -124,7 +124,7 @@ class LazySequence extends \IteratorIterator implements Sequence
         $data = [];
 
         foreach ($this as $ele) {
-            $key = ($getGroupKey)($ele);
+            $key = $getGroupKey($ele);
 
             if (!array_key_exists($key, $data)) {
                 $data[$key] = [];
@@ -159,7 +159,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     private function firstCore(?callable $predicate)
     {
         foreach ($this as $ele) {
-            if ($predicate === null || ($predicate)($ele)) {
+            if ($predicate === null || $predicate($ele)) {
                 return [true, $ele];
             }
         }
@@ -241,7 +241,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
         $keyValuePairs = [];
         foreach ($this as $item) {
-            $keyValuePairs[] = [($keySelector)($item), ($getValue)($item)];
+            $keyValuePairs[] = [$keySelector($item), $getValue($item)];
         }
 
         return ArrayDictionary::fromPairs($keyValuePairs);
@@ -270,7 +270,7 @@ class LazySequence extends \IteratorIterator implements Sequence
                     return;
                 }
 
-                yield ($mapper)($x, $traversable->current());
+                yield $mapper($x, $traversable->current());
 
                 if ($traversable !== $this) {
                     $traversable->next();
@@ -310,7 +310,7 @@ class LazySequence extends \IteratorIterator implements Sequence
             });
         })
             ->map(function ($elements) use ($mapResult) {
-                return ($mapResult)($elements[0], $elements[1]);
+                return $mapResult($elements[0], $elements[1]);
             });
     }
 
