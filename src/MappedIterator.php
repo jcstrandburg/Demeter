@@ -11,7 +11,7 @@ class MappedIterator extends \IteratorIterator
             throw new \ArgumentException("Cannot be null");
         }
 
-        parent::__construct(as_traversable($seq));
+        parent::__construct(as_iterator($seq));
         $this->mapper = $mapper;
     }
 

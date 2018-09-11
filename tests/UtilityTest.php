@@ -1,7 +1,7 @@
 <?php
 namespace Tests;
 
-use function Jcstrandburg\Demeter\as_traversable;
+use function Jcstrandburg\Demeter\as_iterator;
 use function Jcstrandburg\Demeter\infinite;
 use function Jcstrandburg\Demeter\pick_array;
 use function Jcstrandburg\Demeter\repeat;
@@ -11,14 +11,14 @@ use PHPUnit\Framework\TestCase;
 class UtilityTest extends TestCase
 {
     /**
-     * @dataProvider asTraversableProvider
+     * @dataProvider asIteratorProvider
      */
-    public function testAsTraversable(iterable $iterable)
+    public function testAsIterator(iterable $iterable)
     {
-        $this->assertInstanceOf(\Traversable::class, as_traversable($iterable));
+        $this->assertInstanceOf(\Iterator::class, as_iterator($iterable));
     }
 
-    public function asTraversableProvider()
+    public function asIteratorProvider()
     {
         return [
             [(function () {yield 1;yield 2;})()],

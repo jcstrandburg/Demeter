@@ -7,7 +7,7 @@ class SkipWhileIterator extends \IteratorIterator
 
     public function __construct(iterable $seq, callable $reject)
     {
-        parent::__construct(as_traversable($seq));
+        parent::__construct(as_iterator($seq));
         $this->reject = $reject;
     }
 

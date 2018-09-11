@@ -39,24 +39,34 @@ function repeat(iterable $seq, int $count): Sequence
 
 function infinite(iterable $seq): Sequence
 {
-    return sequence(new \InfiniteIterator(as_traversable($seq)));
+    return sequence(new \InfiniteIterator(as_iterator($seq)));
 }
 
+/**
+ * @deprecated Use as_iterator instead
+ */
 function as_traversable(iterable $iterable): \Traversable
 {
-    if ($iterable instanceof \Traversable) {
+    return as_iterator($iterable);
+}
+
+function as_iterator(iterable $iterable): \Iterator
+{
+    if ($iterable instanceof \Iterator) {
         return $iterable;
+    } else if ($iterable instanceof \IteratorAggregate) {
+        return $iterable->getIterator();
     } else if (is_array($iterable)) {
         return new \ArrayIterator($iterable);
     }
 
-    throw new \InvalidArgumentException("Expected \$iterable to of type 'Traversable' or 'array', got type: " . gettype($iterable));
+    throw new \InvalidArgumentException("Expected \$iterable to of type 'Iterator', 'IteratorAggregate' or 'array', got type: " . gettype($iterable));
 }
 
 function pick_array(iterable $iterable, int $count): array
 {
     if ($count > 0) {
-        return iterator_to_array(new \LimitIterator(as_traversable($iterable), 0, $count), false);
+        return iterator_to_array(new \LimitIterator(as_iterator($iterable), 0, $count), false);
     } else if ($count == 0) {
         return [];
     } else {

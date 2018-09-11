@@ -36,6 +36,12 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Added
+* `as_iterator` utility function
+
+#### Deprecated
+* `as_traversable` - use `as_iterator` instead
+
 ### 0.6
 
 #### Fixed

@@ -13,7 +13,7 @@ class LazyRewindableIterator implements \Iterator
     public function __construct(iterable $seq)
     {
         $this->cacheIterator = new \ArrayIterator([]);
-        $this->sourceIterator = as_traversable($seq);
+        $this->sourceIterator = as_iterator($seq);
     }
 
     public function current()

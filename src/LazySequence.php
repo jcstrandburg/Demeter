@@ -47,7 +47,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     {
         $appendIterator = new \AppendIterator();
         $appendIterator->append($this);
-        $appendIterator->append(as_traversable($elements));
+        $appendIterator->append(as_iterator($elements));
         return new LazySequence($appendIterator);
     }
 
@@ -261,19 +261,19 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     public function zip(iterable $seq, callable $mapper): Sequence
     {
-        $traversable = as_traversable($seq);
-        $traversable->rewind();
+        $iterator = as_iterator($seq);
+        $iterator->rewind();
 
-        return sequence((function () use ($traversable, $mapper) {
+        return sequence((function () use ($iterator, $mapper) {
             foreach ($this as $x) {
-                if (!$traversable->valid()) {
+                if (!$iterator->valid()) {
                     return;
                 }
 
-                yield $mapper($x, $traversable->current());
+                yield $mapper($x, $iterator->current());
 
-                if ($traversable !== $this) {
-                    $traversable->next();
+                if ($iterator !== $this) {
+                    $iterator->next();
                 }
             }
         })());
