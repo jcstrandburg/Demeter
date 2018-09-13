@@ -353,6 +353,24 @@ class SequenceTest extends TestCase
             sequence([1, 2, 3, 4, 5])->implode(', '));
     }
 
+    public function testSequenceEnumeration()
+    {
+        $generatorSequence = sequence((function () {yield 1;yield 2;yield 3;yield 4;})());
+
+        $this->assertEquals(
+            [2, 4, 6, 8],
+            $generatorSequence->zip($generatorSequence, Lambda::add())->toArray());
+    }
+
+    public function testSequenceEnumeration2()
+    {
+        $generatorSequence = sequence([1, 2, 3, 4]);
+
+        $this->assertEquals(
+            [3, 5, 7, 9],
+            $generatorSequence->zip($generatorSequence->map(Lambda::plus(1)), Lambda::add())->toArray());
+    }
+
     public function testEmpty()
     {
         $this->assertEquals([], sequence([])->toArray());

@@ -36,6 +36,9 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Removed
+* `LazyRewindableIterator` has been replaced with an internal implementation
+
 #### Added
 * `as_iterator` utility function
 

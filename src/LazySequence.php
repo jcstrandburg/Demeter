@@ -1,15 +1,19 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-class LazySequence extends \IteratorIterator implements Sequence
+class LazySequence implements Sequence
 {
+    /**
+     * @property \LazyRewindableIterator
+     */
+    private $iterator;
+
     /**
      * @var iterable    $seq The source data
      */
     public function __construct(iterable $seq)
     {
-        $iterator = $seq instanceof LazyRewindableIterator || $seq instanceof Sequence ? $seq : new LazyRewindableIterator($seq);
-        parent::__construct($iterator);
+        $this->iterator = $seq instanceof InternalIteratorCache ? $seq : new InternalIteratorCache($seq);
     }
 
     public function map(callable $selector): Sequence
@@ -35,7 +39,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     public function filter(callable $predicate): Sequence
     {
-        return new LazySequence(new \CallbackFilterIterator($this, $predicate));
+        return new LazySequence(new \CallbackFilterIterator($this->getIterator(), $predicate));
     }
 
     public function append($ele): Sequence
@@ -46,7 +50,7 @@ class LazySequence extends \IteratorIterator implements Sequence
     public function concat(iterable $elements): Sequence
     {
         $appendIterator = new \AppendIterator();
-        $appendIterator->append($this);
+        $appendIterator->append($this->getIterator());
         $appendIterator->append(as_iterator($elements));
         return new LazySequence($appendIterator);
     }
@@ -85,7 +89,7 @@ class LazySequence extends \IteratorIterator implements Sequence
 
     public function slice(int $offset, int $count): Sequence
     {
-        return new LazySequence(new \LimitIterator($this, $offset, $count));
+        return new LazySequence(new \LimitIterator($this->getIterator(), $offset, $count));
     }
 
     public function fold($initial, callable $folder)
@@ -284,11 +288,9 @@ class LazySequence extends \IteratorIterator implements Sequence
         return new LazySequence((function () use ($count) {
             $x = $this;
 
-            $x->rewind();
-            while ($x->valid()) {
+            while ($x->any(Lambda::constant(true))) {
                 yield $x->take($count)->collect();
                 $x = $x->skip($count);
-                $x->rewind();
             }
         })());
     }
@@ -327,6 +329,11 @@ class LazySequence extends \IteratorIterator implements Sequence
     public function __toString()
     {
         return "<LazySequence>";
+    }
+
+    public function getIterator(): InternalIterator
+    {
+        return new InternalIterator($this->iterator);
     }
 
     private static $_empty = null;

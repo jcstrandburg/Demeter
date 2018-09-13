@@ -1,7 +1,7 @@
 <?php
 namespace Jcstrandburg\Demeter;
 
-interface Sequence extends \Iterator
+interface Sequence extends \IteratorAggregate
 {
     /**
      * @param   callable    $selector   Mapper function
