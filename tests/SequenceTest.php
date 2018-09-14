@@ -353,7 +353,7 @@ class SequenceTest extends TestCase
             sequence([1, 2, 3, 4, 5])->implode(', '));
     }
 
-    public function testSequenceEnumeration()
+    public function testConcurrentIteration()
     {
         $generatorSequence = sequence((function () {yield 1;yield 2;yield 3;yield 4;})());
 
@@ -362,7 +362,7 @@ class SequenceTest extends TestCase
             $generatorSequence->zip($generatorSequence, Lambda::add())->toArray());
     }
 
-    public function testSequenceEnumeration2()
+    public function testConcurrentIterationViaMapping()
     {
         $generatorSequence = sequence([1, 2, 3, 4]);
 
