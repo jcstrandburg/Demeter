@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class MappedIterator extends \IteratorIterator
 {
-    private $mapper;
-
     public function __construct(iterable $seq, callable $mapper)
     {
         if ($mapper == null) {
@@ -19,4 +17,9 @@ class MappedIterator extends \IteratorIterator
     {
         return ($this->mapper)(parent::current());
     }
+
+    /**
+     * @property    callable
+     */
+    private $mapper;
 }

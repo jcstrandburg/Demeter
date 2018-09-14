@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class TakeWhileIterator extends \IteratorIterator
 {
-    private $accept;
-
     public function __construct(iterable $seq, callable $accept)
     {
         parent::__construct(as_iterator($seq));
@@ -16,4 +14,9 @@ class TakeWhileIterator extends \IteratorIterator
         $innerIterator = $this->getInnerIterator();
         return $innerIterator->valid() && ($this->accept)($innerIterator->current());
     }
+
+    /**
+     * @property    callable
+     */
+    private $accept;
 }

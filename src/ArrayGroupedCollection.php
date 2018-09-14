@@ -54,7 +54,11 @@ class ArrayGroupedCollection extends ArrayCollection implements GroupedCollectio
         throw new \BadMethodCallException("ArrayGroupedCollection does not support offsetUnset");
     }
 
+    /**
+     * @property    array
+     */
     private static $emptyGroupsCache = [];
+
     private static function getEmptyGroup($key)
     {
         if (!array_key_exists($key, self::$emptyGroupsCache)) {

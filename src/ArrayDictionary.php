@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class ArrayDictionary extends ArrayCollection implements Dictionary
 {
-    private $dict;
-
     public function __construct(array $data)
     {
         $this->dict = $data;
@@ -146,4 +144,9 @@ class ArrayDictionary extends ArrayCollection implements Dictionary
         }
         return new ArrayDictionary($dict);
     }
+
+    /**
+     * @property    array
+     */
+    private $dict;
 }

@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class ArrayGrouping extends ArrayCollection implements Grouping
 {
-    private $groupKey;
-
     public function __construct(iterable $seq, $groupKey)
     {
         parent::__construct($seq);
@@ -15,4 +13,9 @@ class ArrayGrouping extends ArrayCollection implements Grouping
     {
         return $this->groupKey;
     }
+
+    /**
+     * @property    mixed
+     */
+    private $groupKey;
 }

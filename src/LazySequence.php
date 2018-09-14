@@ -4,11 +4,6 @@ namespace Jcstrandburg\Demeter;
 class LazySequence implements Sequence
 {
     /**
-     * @property \LazyRewindableIterator
-     */
-    private $iterator;
-
-    /**
      * @var iterable    $seq The source data
      */
     public function __construct(iterable $seq)
@@ -336,12 +331,20 @@ class LazySequence implements Sequence
         return new InternalIterator($this->iterator);
     }
 
-    private static $_empty = null;
-
     /**
      * @return  Sequence An empty Sequence
      */
     function empty() {
         return self::$_empty ?? self::$_empty = new LazySequence([]);
     }
+
+    /**
+     * @property    Sequence
+     */
+    private static $_empty = null;
+
+    /**
+     * @property    InternalIteratorr
+     */
+    private $iterator;
 }

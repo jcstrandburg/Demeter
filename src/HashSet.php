@@ -6,10 +6,6 @@ namespace Jcstrandburg\Demeter;
  */
 class HashSet extends ArrayCollection implements Set
 {
-    private $hashMap;
-    private $equalityFunction;
-    private $hashFunction;
-
     /**
      * @param   iterable|null   $seq    The source data
      * @param   callable|null   $equalityFunction   The function to use for item equality comparison. If none is provided then `===` will be used.
@@ -35,7 +31,7 @@ class HashSet extends ArrayCollection implements Set
         foreach ($this->hashMap as $bucket) {
             foreach ($bucket as $b) {$flat[] = $b;}
         }
-        $this->flatMap = $flat;
+
         parent::__construct($flat);
     }
 
@@ -164,4 +160,19 @@ class HashSet extends ArrayCollection implements Set
             return new HashSet(is_array($seq) ? $seq : iterator_to_array($seq), $g, $f);
         }
     }
+
+    /**
+     * @property    callable
+     */
+    private $hashFunction;
+
+    /**
+     * @property    callable
+     */
+    private $equalityFunction;
+
+    /**
+     * @property    array
+     */
+    private $hashMap;
 }

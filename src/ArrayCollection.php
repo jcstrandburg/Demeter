@@ -18,9 +18,17 @@ class ArrayCollection extends LazySequence implements Collection
         return $this->count;
     }
 
-    private static $_empty;
-
     function empty(): ArrayCollection {
         return self::$_empty ?? self::$_empty = new ArrayCollection([]);
     }
+
+    /**
+     * @property    int
+     */
+    private $count;
+
+    /**
+     * @property    ArrayCollection
+     */
+    private static $_empty;
 }

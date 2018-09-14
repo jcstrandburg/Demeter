@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class SkipWhileIterator extends \IteratorIterator
 {
-    private $reject;
-
     public function __construct(iterable $seq, callable $reject)
     {
         parent::__construct(as_iterator($seq));
@@ -19,4 +17,9 @@ class SkipWhileIterator extends \IteratorIterator
             $this->next();
         }
     }
+
+    /**
+     * @property    callable
+     */
+    private $reject;
 }
