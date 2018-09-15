@@ -36,6 +36,8 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.7
+
 #### Changes
 * All collection classes now implement `IteratorAggregate` instead of extending `IteratorIterator`
 * `GroupedCollection::getGroupKeys` now returns a `Collection` instead of an array
