@@ -44,7 +44,10 @@ class GroupedCollectionTest extends TestCase
             ['species' => 'bat', 'name' => 'Viktor'],
         ])->groupBy(Lambda::selectKey('species'));
 
-        $this->assertEquals(['cat', 'dog', 'bat'], $groups->getGroupKeys());
+        $this->assertEquals(
+            ['cat', 'dog', 'bat'],
+            $groups->getGroupKeys()->toArray());
+
         foreach ($groups->getGroupKeys() as $key) {
             $this->assertEquals($key, $groups[$key]->getGroupKey());
         }

@@ -25,9 +25,9 @@ class ArrayGroupedCollection extends ArrayCollection implements GroupedCollectio
         parent::__construct($this->groupsByKey);
     }
 
-    public function getGroupKeys(): array
+    public function getGroupKeys(): Collection
     {
-        return array_keys($this->groupsByKey);
+        return collect(array_keys($this->groupsByKey));
     }
 
     public function offsetExists($key)

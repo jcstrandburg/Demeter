@@ -13,7 +13,7 @@ Vanilla PHP:
 ```php
 $x = array_slice(
   array_map(
-    function ($x) { return $x * 2; },
+    function ($x) {return $x * 2;},
     array_filter([1, 2, 3, 4, 5], function ($x) {return $x % 2 == 1;})),
   0, 2);
 ```
@@ -37,7 +37,9 @@ $x = sequence([1, 2, 3, 4, 5])
 ### Unreleased
 
 #### Changes
-* It is now possible to safely perform concurrent iterations over the same `Seqeuence` or derivations thereof.
+* All collection classes now implement `IteratorAggregate` instead of extending `IteratorIterator`
+* `GroupedCollection::getGroupKeys` now returns a `Collection` instead of an array
+* It is now possible to safely perform concurrent iterations over the same `Sequence` or derivations thereof.
 
 For example, if `$x = sequence([1,2,3,4]);`
 
