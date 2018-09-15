@@ -36,6 +36,15 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+#### Changes
+* It is now possible to safely perform concurrent iterations over the same `Seqeuence` or derivations thereof.
+
+For example, if `$x = sequence([1,2,3,4]);`
+
+Before: `$x->zip($x->map(Lambda::plus(1)), Lambda::add())->toArray() == [3,6]`
+
+Now: `$x->zip($x->map(Lambda::plus(1)), Lambda::add())->toArray() == [3,5,7,9]`
+
 #### Removed
 * `LazyRewindableIterator` has been replaced with an internal implementation
 
