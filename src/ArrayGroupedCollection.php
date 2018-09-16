@@ -3,8 +3,6 @@ namespace Jcstrandburg\Demeter;
 
 class ArrayGroupedCollection extends ArrayCollection implements GroupedCollection
 {
-    private $groupsByKey;
-
     /**
      * Assumes that callers have already filtered out empty groups.
      * @param   iterable[]  $groupsByKey    An associative array associating group keys to iterables.
@@ -53,6 +51,11 @@ class ArrayGroupedCollection extends ArrayCollection implements GroupedCollectio
     {
         throw new \BadMethodCallException("ArrayGroupedCollection does not support offsetUnset");
     }
+
+    /**
+     * @property    array
+     */
+    private $groupsByKey;
 
     /**
      * @property    array

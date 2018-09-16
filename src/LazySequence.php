@@ -3,6 +3,8 @@ namespace Jcstrandburg\Demeter;
 
 class LazySequence implements Sequence
 {
+    use \Jcstrandburg\ExtensionMethods\Extensible;
+
     /**
      * @var iterable    $seq The source data
      */
