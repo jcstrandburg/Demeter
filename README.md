@@ -36,6 +36,8 @@ $x = sequence([1, 2, 3, 4, 5])
 
 ### Unreleased
 
+### 0.8
+
 #### Added
 * `Extensions` static class for extension method support
 
